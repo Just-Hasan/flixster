@@ -1,0 +1,16 @@
+.gradient_container {
+  position: relative;
+}
+
+.gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.gradient_container img {
+  left: 0;
+  top: 0;
+  width: 100vw;
+  object-fit: fill;
+}
