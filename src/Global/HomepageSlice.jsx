@@ -24,7 +24,8 @@ const homepageSlice = createSlice({
 
 //Action Creator
 export function airingMovies() {
-  return async function (dispatch) {
+  //redux thunk stuff👇
+  return async function (dispatch, getState) {
     dispatch({ type: "homepage/airingLoading", payload: true });
     try {
       const { data } = await axios.get(

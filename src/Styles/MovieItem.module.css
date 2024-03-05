@@ -1,0 +1,8 @@
+.gradient {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: linear-gradient(to top right, #000, transparent);
+}

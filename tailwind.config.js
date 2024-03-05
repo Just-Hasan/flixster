@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         body: ["Hind Guntur"],
+        compressed: ["Oswald"],
       },
     },
   },

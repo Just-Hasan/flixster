@@ -1,7 +1,15 @@
 import { airingMovies } from "../Global/HomepageSlice";
 import { useSelector, useDispatch } from "react-redux";
-/////////////////////////////////////[Component]
 import { useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+/////////////////////////////////////[Swiper css]
+import "swiper/css";
+import styles from "../Styles/Homepage.module.css";
+
+/////////////////////////////////////[Component]
+import MovieItem from "../Components/Homepage/MovieItem";
 
 export default function Homepage() {
   const homepageData = useSelector((store) => store.homepage);
@@ -13,19 +21,29 @@ export default function Homepage() {
   console.log(airing);
   return (
     <section>
-      <ul>
-        {airing.map((movie) => {
+      <Swiper
+        slidesPerView={1}
+        loop={true}
+        pagination={{
+          clickable: false,
+        }}
+        navigation={true}
+        modules={[Autoplay]}
+        className="mySwiper"
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          easing: "easeInQuad",
+        }}
+      >
+        {airing.slice(0, 5).map((movie) => {
           return (
-            <li key={movie.id}>
-              <img
-                src={`${import.meta.env.VITE_TMBD_IMG_PATH}${
-                  movie.poster_path
-                }`}
-              ></img>
-            </li>
+            <SwiperSlide key={movie.id}>
+              <MovieItem movie={movie}></MovieItem>;
+            </SwiperSlide>
           );
         })}
-      </ul>
+      </Swiper>
     </section>
   );
 }
