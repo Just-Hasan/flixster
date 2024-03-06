@@ -1,0 +1,5 @@
+.navList a:global(.active) {
+  text-decoration: underline;
+  text-underline-offset: 50%;
+  color: #fee715;
+}

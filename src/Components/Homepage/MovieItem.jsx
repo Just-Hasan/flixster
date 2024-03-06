@@ -39,7 +39,7 @@ export default function MovieItem({ movie }) {
         src={`${import.meta.env.VITE_TMBD_IMG_PATH}${movie.backdrop_path}`}
       />
       <div className={style.gradient}></div>
-      <div className="absolute bottom-[42px] left-[5%] flex flex-col gap-[16px] text-left items-start">
+      <div className="absolute bottom-[15%] left-[5%] flex flex-col gap-[16px] text-left items-start">
         <div></div>
         <h2 className="font-semibold text-[#f4f4f4] font-compressed text-[64px] mb-[24px]">
           {movie.title}
