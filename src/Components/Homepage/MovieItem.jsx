@@ -40,7 +40,6 @@ export default function MovieItem({ movie }) {
       />
       <div className={style.gradient}></div>
       <div className="absolute bottom-[15%] left-[5%] flex flex-col gap-[16px] text-left items-start">
-        <div></div>
         <h2 className="font-semibold text-[#f4f4f4] font-compressed text-[64px] mb-[24px]">
           {movie.title}
         </h2>
