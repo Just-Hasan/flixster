@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import axios from "axios";
 
 // Initial Data
@@ -6,6 +7,7 @@ const homepageInitialState = {
   airingLoading: false,
   airing: [],
   popular: [],
+  topRated: [],
 };
 
 // Data Slice
@@ -20,6 +22,9 @@ const homepageSlice = createSlice({
     popularMovies(state, action) {
       state.popular = action.payload;
     },
+    topRatedMovies(state, action) {
+      state.topRated = action.payload;
+    },
     airingLoading(state, action) {
       state.airingLoading = action.payload;
     },
@@ -29,17 +34,18 @@ const homepageSlice = createSlice({
 //Action Creator
 export function airingMovies() {
   //redux thunk stuff👇
-  return async function (dispatch, getState) {
+  return async function (dispatch) {
     dispatch({ type: "homepage/airingLoading", payload: true });
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/movie/now_playing`,
+        `https://api.themoviedb.org/3/movie/now_playing`,
         {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
           },
         }
       );
+
       dispatch({ type: "homepage/airingMovies", payload: data.results });
     } catch (error) {
       dispatch({ type: "homepage/airingLoading", payload: false });
@@ -54,7 +60,7 @@ export function popularMovies() {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/movie/popular`,
+        `https://api.themoviedb.org/3/movie/popular`,
         {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
@@ -69,4 +75,21 @@ export function popularMovies() {
   };
 }
 
+export function topRatedMovies() {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/movie/top_rated`,
+        {
+          params: {
+            api_key: import.meta.env.VITE_TMDB_API_KEY,
+          },
+        }
+      );
+      dispatch({ type: "homepage/topRatedMovies", payload: data.results });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
 export default homepageSlice.reducer;
