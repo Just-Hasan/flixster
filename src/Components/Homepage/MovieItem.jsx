@@ -36,7 +36,7 @@ export default function MovieItem({ movie }) {
     <li className="relative">
       <img
         className="h-[100%] w-[100vw] max-h-[100vh]"
-        src={`${import.meta.env.VITE_TMBD_IMG_PATH}${movie.backdrop_path}`}
+        src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
       />
       <div className={style.gradient}></div>
       <div className="absolute bottom-[15%] left-[5%] flex flex-col gap-[16px] text-left items-start">

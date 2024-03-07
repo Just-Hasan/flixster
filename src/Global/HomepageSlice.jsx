@@ -33,7 +33,7 @@ export function airingMovies() {
     dispatch({ type: "homepage/airingLoading", payload: true });
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_TMDB_BASE_URL}/movie/now_playing`,
+        ` https://api.themoviedb.org/3/movie/now_playing`,
         {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
@@ -54,7 +54,7 @@ export function popularMovies() {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_TMDB_BASE_URL}/movie/popular`,
+        ` https://api.themoviedb.org/3/movie/popular`,
         {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
