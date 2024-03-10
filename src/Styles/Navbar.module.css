@@ -3,3 +3,7 @@
   text-underline-offset: 50%;
   color: #fee715;
 }
+
+.select::placeholder {
+  font-size: 28px;
+}
