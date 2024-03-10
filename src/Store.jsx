@@ -8,7 +8,7 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import { combineReducers } from "@reduxjs/toolkit";
 
-const persistConfig = {
+const themePersistConfig = {
   key: "Theme",
   version: 1,
   storage,
@@ -17,7 +17,7 @@ const persistConfig = {
 const reducer = combineReducers({
   homepage: homepageReducer,
   navbar: navbarReducer,
-  theme: persistReducer(persistConfig, themeReducer),
+  theme: persistReducer(themePersistConfig, themeReducer),
 });
 
 const store = configureStore({

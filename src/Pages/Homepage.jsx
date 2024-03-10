@@ -2,7 +2,9 @@ import {
   airingMovies,
   popularMovies,
   topRatedMovies,
+  airingTv,
 } from "../Global/HomepageSlice";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -37,14 +39,18 @@ export default function Homepage() {
     dispatch(topRatedMovies());
   }, [dispatch]);
 
-  const { airing } = homepageData;
+  useEffect(() => {
+    dispatch(airingTv());
+  }, [dispatch]);
+
+  const { airing, airingTvSeries } = homepageData;
 
   const movieType = [
     { type: "Popular", section: <PopularSection key={0} /> },
     { type: "Top Rated", section: <TopRatedSection key={1} /> },
     { type: "Upcoming", section: <UpcomingSection key={2} /> },
   ];
-
+  console.log(airingTvSeries);
   return (
     <>
       <section>
@@ -111,6 +117,45 @@ export default function Homepage() {
             </Link>
           </nav>
           {movieType[movieSection].section}
+        </div>
+      </section>
+      {/*  */}
+      <hr></hr>
+      <section
+        className={`${
+          theme === "light" ? "bg-white" : "bg-[#1c1c1c]"
+        } py-16 duration-300 ease-in-out`}
+      >
+        {" "}
+        <div className="w-[90%] mx-auto">
+          <div className="text-subTitle mb-[36px] mt-[48px] grid grid-cols-2 justify-between items-center">
+            <h2
+              className={`${
+                theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
+              } font-bold w-full duration-300 ease-in-out`}
+            >
+              Airing series
+            </h2>
+            <Link
+              to={`${movieType[movieSection].type}`}
+              className={`text-[18px] underline ${
+                theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
+              } justify-self-end `}
+            >
+              See all
+            </Link>
+          </div>
+          <ul className="grid grid-cols-4 gap-8">
+            {airingTvSeries.slice(0, 8).map((tv) => {
+              return (
+                <li key={tv.name}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${tv.poster_path}`}
+                  ></img>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
     </>

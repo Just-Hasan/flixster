@@ -8,6 +8,7 @@ const homepageInitialState = {
   airing: [],
   popular: [],
   topRated: [],
+  airingTvSeries: [],
 };
 
 // Data Slice
@@ -28,6 +29,9 @@ const homepageSlice = createSlice({
     airingLoading(state, action) {
       state.airingLoading = action.payload;
     },
+    airingTv(state, action) {
+      state.airingTvSeries = action.payload;
+    },
   },
 });
 
@@ -47,6 +51,29 @@ export function airingMovies() {
       );
 
       dispatch({ type: "homepage/airingMovies", payload: data.results });
+    } catch (error) {
+      dispatch({ type: "homepage/airingLoading", payload: false });
+      console.log(error.message);
+    } finally {
+      dispatch({ type: "homepage/airingLoading", payload: false });
+    }
+  };
+}
+
+export function airingTv() {
+  //redux thunk stuff👇
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/tv/popular`,
+        {
+          params: {
+            api_key: import.meta.env.VITE_TMDB_API_KEY,
+          },
+        }
+      );
+
+      dispatch({ type: "homepage/airingTv", payload: data.results });
     } catch (error) {
       dispatch({ type: "homepage/airingLoading", payload: false });
       console.log(error.message);
@@ -92,4 +119,5 @@ export function topRatedMovies() {
     }
   };
 }
+
 export default homepageSlice.reducer;
