@@ -22,7 +22,6 @@ export default function Navbar() {
   const { theme } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(searched);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,7 +31,7 @@ export default function Navbar() {
       return;
     }
     dispatch(searchMovieOrTv(searchValue));
-    navigate(`movie/searched?query=${searchValue}&page=${page}`);
+    navigate(`show/searched?query=${searchValue}&page=${page}`);
     dispatch(searchQuery(""));
   }
 

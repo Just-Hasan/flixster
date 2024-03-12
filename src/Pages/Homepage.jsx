@@ -50,7 +50,6 @@ export default function Homepage() {
     { type: "Top Rated", section: <TopRatedSection key={1} /> },
     { type: "Upcoming", section: <UpcomingSection key={2} /> },
   ];
-  console.log(airingTvSeries);
   return (
     <>
       <section>

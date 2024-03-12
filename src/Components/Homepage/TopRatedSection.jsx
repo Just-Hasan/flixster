@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import MovieItem from "./MovieItem";
+import MovieItem from "../MovieItem";
 
 export default function TopRatedSection() {
   const { topRated } = useSelector((store) => store.homepage);
