@@ -72,13 +72,15 @@ export default function SelectedResultPage() {
         <div className="w-1/2 justify-self-center  translate-y-[-20%]">
           <img src={`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}}`} />
           {tagline !== "" && (
-            <blockquote className="text-center pt-[24px] text-[24px] text-[#fee715]">
+            <blockquote className="text-center pt-[24px] text-[24px] text-[#fee715] leading-[1.5]">
               &quot;{tagline}&quot;
             </blockquote>
           )}
         </div>
         <div className="p-4  translate-x-[-10%]">
-          <h2 className="text-[42px] font-bold mb-[16px]">{title || name}</h2>
+          <h2 className="text-[42px] font-bold font-compressed mb-[16px]">
+            {title || name}
+          </h2>
           <p className="text-2xl mb-[32px] flex gap-4">
             {genre?.map((type) => (
               <span
@@ -120,7 +122,7 @@ export default function SelectedResultPage() {
             {/*  */}
             <p>Countries</p>
             <p>:</p>
-            <p className="text-left">{production_countries?.at(0).name}</p>
+            <p className="text-left">{production_countries?.at(0)?.name}</p>
           </div>
           {/*  */}
           <div className="pt-[36px]">
