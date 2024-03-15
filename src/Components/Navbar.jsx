@@ -67,7 +67,7 @@ export default function Navbar() {
               placeholder="Search movies"
               onChange={(e) => dispatch(searchQuery(e.target.value))}
               value={searchValue}
-              className="p-3 h-max rounded-full w-full text-[16px] text-center text-[#f4f4f4] focus:outline-none placeholder:text-center bg-transparent border border-white"
+              className="p-3 h-max rounded-full w-full text-[16px] text-center text-[#f4f4f4] focus:outline-none placeholder:text-center bg-transparent border border-white placeholder:text-[#f4f4f4]"
             />
             <FaMagnifyingGlass className="text-[16px] absolute left-[10px] top-1/2 translate-y-[-50%] text-[#f4f4f4]" />
           </form>

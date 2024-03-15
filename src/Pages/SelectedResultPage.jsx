@@ -1,4 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
+import { FaPlay } from "react-icons/fa";
+
 import {
   getMovieData,
   getMovieVideo,
@@ -18,7 +20,6 @@ export default function SelectedResultPage() {
 
   const {
     title,
-    media_type,
     backdrop_path,
     budget,
     genres,
@@ -32,7 +33,10 @@ export default function SelectedResultPage() {
     runtime,
     spoken_languages,
     status,
+    vote_average,
     tagline,
+    first_air_date,
+    production_countries,
   } = movieData;
 
   useEffect(() => {
@@ -48,7 +52,6 @@ export default function SelectedResultPage() {
   }, [id, type, dispatch]);
 
   const genre = genres?.map((genre) => genre.name);
-  console.log(movieData);
 
   return (
     <div
@@ -68,11 +71,13 @@ export default function SelectedResultPage() {
       <div className="w-[80%] mx-auto grid grid-cols-2 ">
         <div className="w-1/2 justify-self-center  translate-y-[-20%]">
           <img src={`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}}`} />
-          <blockquote className="text-center pt-[24px] text-[16px]">
-            &quot;{tagline}&quot;
-          </blockquote>
+          {tagline !== "" && (
+            <blockquote className="text-center pt-[24px] text-[24px] text-[#fee715]">
+              &quot;{tagline}&quot;
+            </blockquote>
+          )}
         </div>
-        <div className="p-4">
+        <div className="p-4  translate-x-[-10%]">
           <h2 className="text-[42px] font-bold mb-[16px]">{title || name}</h2>
           <p className="text-2xl mb-[32px] flex gap-4">
             {genre?.map((type) => (
@@ -86,7 +91,43 @@ export default function SelectedResultPage() {
               </span>
             ))}
           </p>
-          <p className="text-[18px] leading-[1.4]">{overview}</p>
+          {/*  */}
+          <div className="text-[18px] leading-[1.4] mb-[16px] flex  items-center gap-8">
+            <p
+              className={`text-[24px] ${
+                theme === "dark"
+                  ? "bg-[#f4f4f4] text-[#1c1c1c]"
+                  : "bg-[#1c1c1c] text-[#f4f4f4]"
+              } w-max p-4 rounded-full font-bold`}
+            >
+              {vote_average?.toFixed(1)}
+            </p>
+            <button
+              className={`${
+                theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
+              } w-max p-5 rounded-full font-bold border-2 ${
+                theme === "dark" ? "border-[#f4f4f4]" : "border-[#1c1c1c]"
+              }`}
+            >
+              <FaPlay className="text-[24px]"></FaPlay>
+            </button>
+            <span>Watch trailer</span>
+          </div>
+          <div className="text-[16px] grid grid-cols-[auto,auto,auto] justify-start gap-[16px]">
+            <p>{type === "movie" ? "Release Date" : "First Airing"}</p>
+            <p>:</p>
+            <p>{type === "movie" ? release_date : first_air_date}</p>
+            {/*  */}
+            <p>Countries</p>
+            <p>:</p>
+            <p className="text-left">{production_countries?.at(0).name}</p>
+          </div>
+          {/*  */}
+          <div className="pt-[36px]">
+            <p className="text-[24px] py-4">Overview</p>
+            <br />
+            <p className="text-[16px] leading-[1.5]">{overview}</p>
+          </div>
         </div>
       </div>
     </div>
