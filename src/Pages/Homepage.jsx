@@ -9,17 +9,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { Suspense } from "react";
 
 /////////////////////////////////////[Swiper css]
 import "swiper/css";
 
 /////////////////////////////////////[Component]
-import MovieItem from "../Components/Homepage/HomepageMovieItem";
+import HomepageMovieItem from "../Components/Homepage/HomepageMovieItem";
 import PopularSection from "../Components/Homepage/PopularSection";
 import TopRatedSection from "../Components/Homepage/TopRatedSection";
 import { Link } from "react-router-dom";
 import UpcomingSection from "../Components/Homepage/UpcomingSection";
+import MovieItem from "../Components/MovieItem";
 
 export default function Homepage() {
   const [movieSection, setMovieAction] = useState(0);
@@ -71,7 +71,7 @@ export default function Homepage() {
           {airing.slice(0, 5).map((movie) => {
             return (
               <SwiperSlide key={movie.id}>
-                <MovieItem movie={movie}></MovieItem>
+                <HomepageMovieItem movie={movie}></HomepageMovieItem>
               </SwiperSlide>
             );
           })}
@@ -146,13 +146,7 @@ export default function Homepage() {
           </div>
           <ul className="grid grid-cols-4 gap-8">
             {airingTvSeries.slice(0, 8).map((tv) => {
-              return (
-                <li key={tv.name}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original/${tv.poster_path}`}
-                  ></img>
-                </li>
-              );
+              return <MovieItem key={tv.id} movie={tv} type="tv" />;
             })}
           </ul>
         </div>

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import style from "../../Styles/HomepageMovieItem.module.css";
+import { Link } from "react-router-dom";
 const genreData = [
   { id: 28, genre: "Action" },
   { id: 12, genre: "Adventure" },
@@ -32,6 +33,10 @@ function getGenre(genres) {
 
 export default function HomepageMovieItem({ movie }) {
   const genre = getGenre(movie.genre_ids);
+  const { id, title } = movie;
+  // to={`/${media.media_type || "movie"}/selected?title=${
+  //   media.original_title || media.name
+  // }&type=${media.media_type || "movie"}&id=${media.id}`}
   return (
     <li className="relative">
       <img
@@ -58,9 +63,12 @@ export default function HomepageMovieItem({ movie }) {
             );
           })}
         </p>
-        <button className="text-[24px] bg-[#fee715] p-4 rounded-full text-[#101820] font-semibold">
+        <Link
+          to={`/movie/selected?title=${title}&type=movie&id=${id}`}
+          className="text-[24px] bg-[#fee715] p-4 rounded-full text-[#101820] font-semibold"
+        >
           Details
-        </button>
+        </Link>
       </div>
     </li>
   );

@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-export default function MovieItem({ movie: media }) {
-  console.log(media);
-  console.log(media.media_type);
+export default function MovieItem({ movie: media, type }) {
   return (
     <Link
       to={`/${media.media_type || "movie"}/selected?title=${
         media.original_title || media.name
-      }&type=${media.media_type || "movie"}&id=${media.id}`}
+      }&type=${type}&id=${media.id}`}
       key={media.id}
       className="overflow-hidden "
     >
@@ -21,4 +19,5 @@ export default function MovieItem({ movie: media }) {
 
 MovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };

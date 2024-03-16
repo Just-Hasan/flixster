@@ -7,7 +7,7 @@ export default function SearchedResultsPage() {
   const { theme } = useSelector((store) => store.theme);
   const [searchParam] = useSearchParams();
   const query = searchParam.get("query");
-  console.log(query);
+  console.log(searched);
   return (
     <div
       className={`pt-48 pb-24 ${
@@ -19,7 +19,13 @@ export default function SearchedResultsPage() {
       </h2>
       <ul className="grid grid-cols-5 gap-8">
         {searched.map((movie) => {
-          return <MovieItem movie={movie} key={movie.id}></MovieItem>;
+          return (
+            <MovieItem
+              movie={movie}
+              type={movie.media_type}
+              key={movie.id}
+            ></MovieItem>
+          );
         })}
       </ul>
     </div>

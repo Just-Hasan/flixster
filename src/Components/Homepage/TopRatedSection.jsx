@@ -6,7 +6,9 @@ export default function TopRatedSection() {
   return (
     <ul className="grid grid-cols-4 gap-8">
       {topRated.slice(5, 13).map((movie) => {
-        return <MovieItem movie={movie} key={movie.id}></MovieItem>;
+        return (
+          <MovieItem movie={movie} type="movie" key={movie.id}></MovieItem>
+        );
       })}
     </ul>
   );

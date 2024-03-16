@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   const { theme } = useSelector((store) => store.theme);
-  console.log(theme);
+
   return (
     <footer
       className={`bottom-0 ${

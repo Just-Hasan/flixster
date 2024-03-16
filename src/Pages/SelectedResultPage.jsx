@@ -51,6 +51,11 @@ export default function SelectedResultPage() {
     dispatch(getMovieCredits(id, type));
   }, [id, type, dispatch]);
 
+  useEffect(() => {
+    document.title = `${name || title}`;
+    return () => (document.title = "Flixster");
+  }, [name, title]);
+
   const genre = genres?.map((genre) => genre.name);
 
   return (
@@ -72,7 +77,11 @@ export default function SelectedResultPage() {
         <div className="w-1/2 justify-self-center  translate-y-[-20%]">
           <img src={`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}}`} />
           {tagline !== "" && (
-            <blockquote className="text-center pt-[24px] text-[24px] text-[#fee715] leading-[1.5]">
+            <blockquote
+              className={`text-center pt-[24px] text-[24px] ${
+                theme === "dark" ? "text-[#fee715]" : "text-[#101820]"
+              } leading-[1.5]`}
+            >
               &quot;{tagline}&quot;
             </blockquote>
           )}
