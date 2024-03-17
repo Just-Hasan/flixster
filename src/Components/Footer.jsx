@@ -10,7 +10,7 @@ export default function Footer() {
         theme === "dark"
           ? "bg-[#1c1c1c] text-[#f4f4f4]"
           : "bg-[#f4f4f4] text-[#1c1c1c]"
-      } text-[16px] p-8 flex justify-between border-t-2 border-white`}
+      } flex justify-between border-white p-8  text-[16px]`}
     >
       <p>
         &copy; {new Date().getFullYear()} <b>Flixster</b>

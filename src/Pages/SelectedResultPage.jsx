@@ -14,6 +14,7 @@ import PosterAndTagline from "../Components/SelectedResultPage/PosterAndTagline"
 import RatingAndTrailerBtn from "../Components/SelectedResultPage/RatingAndTrailerBtn";
 import BackdropPoster from "../Components/SelectedResultPage/BackdropPoster";
 import CastSection from "../Components/SelectedResultPage/CastSection";
+import VideosSection from "../Components/SelectedResultPage/VideosSection";
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
   const [searchParam] = useSearchParams();
@@ -65,7 +66,7 @@ export default function SelectedResultPage() {
 
   const genre = genres?.map((genre) => genre.name);
 
-  console.log(movieCredits);
+  console.log(movieVids);
   return (
     <div
       className={`${
@@ -107,6 +108,7 @@ export default function SelectedResultPage() {
         </div>
       </section>
       <CastSection movieCredits={movieCredits} />
+      <VideosSection />
     </div>
   );
 }

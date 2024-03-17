@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 
 export default function CastSection({ movieCredits }) {
   return (
-    <section className="bg-gray-700 p-[24px] ">
+    <section className="bg-[#032440] p-[24px]">
       <div className="mx-auto w-[90%]">
-        <h2 className="mb-[24px] text-[32px]">Cast</h2>
+        <h2 className="mb-[24px] text-[32px] text-white">Cast</h2>
         <ul className="grid grid-cols-6 gap-8">
-          {movieCredits?.cast?.slice(0, 5).map((cast) => {
+          {movieCredits?.cast?.slice(0, 6).map((cast) => {
             return (
               <li key={cast.id} className="relative">
                 <img

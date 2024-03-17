@@ -13,6 +13,12 @@ export default {
       backgroundImage: {
         popularSectionBg: "url(./public/cinema.jpg)",
       },
+      colors: {
+        black: "#1c1c1c",
+        white: "#f4f4f4",
+        accent: "#fee715",
+        blueNight: "#032440",
+      },
     },
   },
   plugins: [],
