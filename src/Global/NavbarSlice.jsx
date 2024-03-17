@@ -4,8 +4,8 @@ import axios from "axios";
 const initialState = {
   searchValue: "",
   searched: [],
-  page: 0,
-  totalPage: 0,
+  page: 1,
+  totalPage: 1,
 };
 
 const navbarSlice = createSlice({
@@ -35,7 +35,7 @@ export function searchMovieOrTv(query) {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
             query,
           },
-        }
+        },
       );
       console.log(data);
       dispatch({
