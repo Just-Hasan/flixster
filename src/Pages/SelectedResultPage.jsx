@@ -13,7 +13,7 @@ export default function SelectedResultPage() {
   const [searchParam] = useSearchParams();
   const { theme } = useSelector((store) => store.theme);
   const { movieData, movieVids, movieCredits } = useSelector(
-    (store) => store.selected_movie
+    (store) => store.selected_movie,
   );
   const id = searchParam.get("id");
   const type = searchParam.get("type");
@@ -66,19 +66,19 @@ export default function SelectedResultPage() {
           : "bg-[#f4f4f4] text-[#1c1c1c]"
       } transition-all duration-300 ease-in-out`}
     >
-      <div className="w-full h-[35vh] relative">
+      <div className="relative h-[35vh] w-full">
         <img
           src={`${import.meta.env.VITE_TMDB_IMG_PATH}${backdrop_path}`}
-          className="object-cover w-full h-full"
+          className="h-full w-full object-cover"
           alt=""
         />
       </div>
-      <div className="w-[80%] mx-auto grid grid-cols-2 ">
-        <div className="w-1/2 justify-self-center  translate-y-[-20%]">
+      <div className="mx-auto grid w-[80%] grid-cols-2 ">
+        <div className="w-1/2 translate-y-[-20%]  justify-self-center">
           <img src={`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}}`} />
           {tagline !== "" && (
             <blockquote
-              className={`text-center pt-[24px] text-[24px] ${
+              className={`pt-[24px] text-center text-[24px] ${
                 theme === "dark" ? "text-[#fee715]" : "text-[#101820]"
               } leading-[1.5]`}
             >
@@ -86,15 +86,15 @@ export default function SelectedResultPage() {
             </blockquote>
           )}
         </div>
-        <div className="p-4  translate-x-[-10%]">
-          <h2 className="text-[42px] font-bold font-compressed mb-[16px]">
+        <div className="translate-x-[-10%]  p-4">
+          <h2 className="mb-[16px] font-compressed text-[42px] font-bold">
             {title || name}
           </h2>
-          <p className="text-2xl mb-[32px] flex gap-4">
+          <p className="mb-[32px] flex gap-4 text-2xl">
             {genre?.map((type) => (
               <span
                 key={type}
-                className={`p-4 border-2 ${
+                className={`border-2 p-4 ${
                   theme === "dark" ? "border-[#f4f4f4]" : "border-[#1c1c1c]"
                 } rounded-full`}
               >
@@ -103,20 +103,20 @@ export default function SelectedResultPage() {
             ))}
           </p>
           {/*  */}
-          <div className="text-[18px] leading-[1.4] mb-[16px] flex  items-center gap-8">
+          <div className="mb-[16px] flex items-center gap-8  text-[18px] leading-[1.4]">
             <p
               className={`text-[24px] ${
                 theme === "dark"
                   ? "bg-[#f4f4f4] text-[#1c1c1c]"
                   : "bg-[#1c1c1c] text-[#f4f4f4]"
-              } w-max p-4 rounded-full font-bold`}
+              } w-max rounded-full p-4 font-bold`}
             >
               {vote_average?.toFixed(1)}
             </p>
             <button
               className={`${
                 theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
-              } w-max p-5 rounded-full font-bold border-2 ${
+              } w-max rounded-full border-2 p-5 font-bold ${
                 theme === "dark" ? "border-[#f4f4f4]" : "border-[#1c1c1c]"
               }`}
             >
@@ -124,7 +124,7 @@ export default function SelectedResultPage() {
             </button>
             <span>Watch trailer</span>
           </div>
-          <div className="text-[16px] grid grid-cols-[auto,auto,auto] justify-start gap-[16px]">
+          <div className="grid grid-cols-[auto,auto,auto] justify-start gap-[16px] text-[16px]">
             <p>{type === "movie" ? "Release Date" : "First Airing"}</p>
             <p>:</p>
             <p>{type === "movie" ? release_date : first_air_date}</p>
@@ -135,7 +135,7 @@ export default function SelectedResultPage() {
           </div>
           {/*  */}
           <div className="pt-[36px]">
-            <p className="text-[24px] py-4">Overview</p>
+            <p className="py-4 text-[24px]">Overview</p>
             <br />
             <p className="text-[16px] leading-[1.5]">{overview}</p>
           </div>

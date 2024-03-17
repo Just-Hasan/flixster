@@ -82,16 +82,16 @@ export default function Homepage() {
           theme === "light" ? "bg-white" : "bg-[#1c1c1c]"
         } py-16 duration-300 ease-in-out`}
       >
-        <div className="w-[90%] mx-auto">
-          <nav className="text-subTitle mb-[36px] mt-[48px] grid grid-cols-3 justify-between items-center">
+        <div className="mx-auto w-[90%]">
+          <nav className="mb-[36px] mt-[48px] grid grid-cols-3 items-center justify-between text-subTitle">
             <h2
               className={`${
                 theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
-              } font-bold w-full duration-300 ease-in-out`}
+              } w-full font-bold duration-300 ease-in-out`}
             >
               {movieType[movieSection].type} Movie
             </h2>
-            <div className="flex text-[18px] items-center gap-8 text-[#1c1c1c] bg-[#f4f4f4]  rounded-full overflow-hidden justify-self-center">
+            <div className="flex items-center gap-8 justify-self-center overflow-hidden rounded-full  bg-[#f4f4f4] text-[18px] text-[#1c1c1c]">
               {movieType.map((movie, i) => {
                 return (
                   <button
@@ -126,12 +126,12 @@ export default function Homepage() {
         } py-16 duration-300 ease-in-out`}
       >
         {" "}
-        <div className="w-[90%] mx-auto">
-          <div className="text-subTitle mb-[36px] mt-[48px] grid grid-cols-2 justify-between items-center">
+        <div className="mx-auto w-[90%]">
+          <div className="mb-[36px] mt-[48px] grid grid-cols-2 items-center justify-between text-subTitle">
             <h2
               className={`${
                 theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
-              } font-bold w-full duration-300 ease-in-out`}
+              } w-full font-bold duration-300 ease-in-out`}
             >
               Airing series
             </h2>

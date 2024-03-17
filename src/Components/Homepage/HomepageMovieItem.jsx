@@ -25,7 +25,7 @@ const genreData = [
 
 function getGenre(genres) {
   const genre = genreData.filter((genreObj) =>
-    genres.includes(genreObj.id) ? genreObj.genre : ""
+    genres.includes(genreObj.id) ? genreObj.genre : "",
   );
 
   return genre;
@@ -40,19 +40,19 @@ export default function HomepageMovieItem({ movie }) {
   return (
     <li className="relative">
       <img
-        className="h-[100%] w-[100vw] max-h-[100vh]"
+        className="h-[100%] max-h-[100vh] w-[100vw]"
         src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
       />
       <div className={style.gradient}></div>
-      <div className="absolute bottom-[15%] left-[5%] flex flex-col gap-[16px] text-left items-start">
-        <h2 className="font-semibold text-[#f4f4f4] font-compressed text-[64px] mb-[24px]">
+      <div className="absolute bottom-[15%] left-[5%] flex flex-col items-start gap-[16px] text-left">
+        <h2 className="mb-[24px] font-compressed text-[64px] font-semibold text-[#f4f4f4]">
           {movie.title}
         </h2>
 
-        <p className="w-1/2 text-[24px] font-body text-[#f4f4f4] leading-[1.5]">
+        <p className="w-1/2 font-body text-[24px] leading-[1.5] text-[#f4f4f4]">
           {movie.overview}
         </p>
-        <p className="text-[#f4f4f4] text-[24px] mb-[16px]">
+        <p className="mb-[16px] text-[24px] text-[#f4f4f4]">
           Genre :{" "}
           {genre.map((genreMovie, i, arr) => {
             return (
@@ -65,7 +65,7 @@ export default function HomepageMovieItem({ movie }) {
         </p>
         <Link
           to={`/movie/selected?title=${title}&type=movie&id=${id}`}
-          className="text-[24px] bg-[#fee715] p-4 rounded-full text-[#101820] font-semibold"
+          className="rounded-full bg-[#fee715] p-4 text-[24px] font-semibold text-[#101820]"
         >
           Details
         </Link>

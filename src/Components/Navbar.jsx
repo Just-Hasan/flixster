@@ -17,7 +17,7 @@ const options = [
 
 export default function Navbar() {
   const { searchValue, searched, page, totalPage } = useSelector(
-    (store) => store.navbar
+    (store) => store.navbar,
   );
   const { theme } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
@@ -40,36 +40,36 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-[#2c2c2c] p-4 text-[#fee715]  fixed w-full  bg-opacity-20 backdrop-blur-sm z-50">
-      <div className="flex items-center justify-between mx-auto w-[90%]">
+    <nav className="fixed z-50 w-full  bg-[#2c2c2c] bg-opacity-20  p-4 text-[#fee715] backdrop-blur-sm">
+      <div className="mx-auto flex w-[90%] items-center justify-between">
         <div>
           <h1 className="text-[48px] font-bold">Flixster</h1>
         </div>
         <ul className={`flex text-[#f4f4f4] ${style.navList}`}>
-          <NavLink className="text-[18px] p-4" to={"/home"}>
+          <NavLink className="p-4 text-[18px]" to={"/home"}>
             Home
           </NavLink>
 
-          <NavLink className="text-[18px] p-4" to={"/movie"}>
+          <NavLink className="p-4 text-[18px]" to={"/movie"}>
             Movies
           </NavLink>
 
-          <NavLink className="text-[18px] p-4" to={"/tv"}>
+          <NavLink className="p-4 text-[18px]" to={"/tv"}>
             TV Show
           </NavLink>
-          <NavLink className="text-[18px] p-4" to={"/pricing"}>
+          <NavLink className="p-4 text-[18px]" to={"/pricing"}>
             Pricing
           </NavLink>
         </ul>
-        <div className="flex items-center justify-end w-1/4 gap-4">
-          <form className="w-[70%] relative" onSubmit={handleSubmit}>
+        <div className="flex w-1/4 items-center justify-end gap-4">
+          <form className="relative w-[70%]" onSubmit={handleSubmit}>
             <input
               placeholder="Search movies"
               onChange={(e) => dispatch(searchQuery(e.target.value))}
               value={searchValue}
-              className="p-3 h-max rounded-full w-full text-[16px] text-center text-[#f4f4f4] focus:outline-none placeholder:text-center bg-transparent border border-white placeholder:text-[#f4f4f4]"
+              className="h-max w-full rounded-full border border-white bg-transparent p-3 text-center text-[16px] text-[#f4f4f4] placeholder:text-center placeholder:text-[#f4f4f4] focus:outline-none"
             />
-            <FaMagnifyingGlass className="text-[16px] absolute left-[10px] top-1/2 translate-y-[-50%] text-[#f4f4f4]" />
+            <FaMagnifyingGlass className="absolute left-[10px] top-1/2 translate-y-[-50%] text-[16px] text-[#f4f4f4]" />
           </form>
           <Select
             options={options}
