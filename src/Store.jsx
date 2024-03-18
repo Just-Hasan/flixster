@@ -22,6 +22,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+
 const reducer = combineReducers({
   homepage: homepageReducer,
   navbar: navbarReducer,

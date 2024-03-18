@@ -26,14 +26,13 @@ const SelectedMovieSlice = createSlice({
 export default SelectedMovieSlice.reducer;
 
 export function getMovieData(movieID, type) {
-  console.log(type);
   return async function getMovieDatas(dispatch) {
     try {
       const data = await axios.get(
         `${import.meta.env.VITE_TMDB_BASE_URL}${type}/${movieID}`,
         {
           params: { api_key: import.meta.env.VITE_TMDB_API_KEY },
-        }
+        },
       );
       dispatch({
         type: "selected_movie/getSelectedMovieData",
@@ -54,7 +53,7 @@ export function getMovieVideo(movieID, type) {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
           },
-        }
+        },
       );
       dispatch({
         type: "selected_movie/getSelectedMovieVideos",
@@ -74,7 +73,7 @@ export function getMovieCredits(movieID, type) {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
           },
-        }
+        },
       );
       dispatch({
         type: "selected_movie/getSelectedMovieCredits",

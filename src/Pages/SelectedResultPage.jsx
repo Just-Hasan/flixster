@@ -66,7 +66,6 @@ export default function SelectedResultPage() {
 
   const genre = genres?.map((genre) => genre.name);
 
-  console.log(movieVids);
   return (
     <div
       className={`${
@@ -108,7 +107,10 @@ export default function SelectedResultPage() {
         </div>
       </section>
       <CastSection movieCredits={movieCredits} />
-      <VideosSection />
+
+      {movieVids?.results.length !== 0 && (
+        <VideosSection theme={theme} video={movieVids} />
+      )}
     </div>
   );
 }
