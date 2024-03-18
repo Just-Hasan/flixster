@@ -74,7 +74,7 @@ export default function SelectedResultPage() {
           : "bg-[#f4f4f4] text-[#1c1c1c]"
       } transition-all duration-300 ease-in-out`}
     >
-      <BackdropPoster backdrop_path={backdrop_path} />
+      <BackdropPoster backdrop_path={movieData?.backdrop_path} />
 
       <section className="mx-auto grid w-[80%] grid-cols-2 ">
         <PosterAndTagline
