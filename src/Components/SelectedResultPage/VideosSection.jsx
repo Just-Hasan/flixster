@@ -15,6 +15,7 @@ export default function VideosSection({ theme, video }) {
     >
       <div className="mx-auto w-[90%]">
         <h2 className="mb-[24px] text-[32px]">Videos</h2>
+
         <ul className="flex w-max  overflow-hidden rounded-full border-2 p-2">
           {uniqueType.map((type) => (
             <li
