@@ -108,7 +108,7 @@ export default function SelectedResultPage() {
       </section>
       <CastSection movieCredits={movieCredits} />
 
-      {movieVids?.results.length !== 0 && (
+      {movieVids?.results?.length !== 0 && (
         <VideosSection theme={theme} video={movieVids} />
       )}
     </div>
