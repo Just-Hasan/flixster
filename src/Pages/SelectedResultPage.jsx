@@ -4,7 +4,9 @@ import {
   getMovieData,
   getMovieVideo,
   getMovieCredits,
+  getMovieProvider,
 } from "../Global/SelectedMovieSlice";
+
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Overview from "../Components/SelectedResultPage/Overview";
@@ -15,30 +17,28 @@ import RatingAndTrailerBtn from "../Components/SelectedResultPage/RatingAndTrail
 import BackdropPoster from "../Components/SelectedResultPage/BackdropPoster";
 import CastSection from "../Components/SelectedResultPage/CastSection";
 import VideosSection from "../Components/SelectedResultPage/VideosSection";
+import WatchSection from "../Components/SelectedResultPage/WatchSection";
+
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
   const [searchParam] = useSearchParams();
   const { theme } = useSelector((store) => store.theme);
-  const { movieData, movieVids, movieCredits } = useSelector(
+  const { movieData, movieVids, movieCredits, movieProvider } = useSelector(
     (store) => store.selected_movie,
   );
   const id = searchParam.get("id");
   const type = searchParam.get("type");
-
+  console.log(movieProvider);
   const {
     title,
-    backdrop_path,
     budget,
     genres,
     name,
     original_title = title,
     overview,
-    popularity,
     poster_path,
     release_date,
     revenue,
-    runtime,
-    spoken_languages,
     status,
     vote_average,
     tagline,
@@ -64,7 +64,24 @@ export default function SelectedResultPage() {
     return () => (document.title = "Flixster");
   }, [name, title]);
 
+  useEffect(() => {
+    dispatch(getMovieProvider(id, type));
+  }, [dispatch, id, type]);
+
   const genre = genres?.map((genre) => genre.name);
+
+  const objectValue = Object.values(movieProvider);
+
+  const alternativeMovieData = objectValue.find(
+    (link) => link.flatrate?.length >= 1,
+  );
+
+  const movieStreamLink = objectValue?.at(0)?.link;
+
+  const movieStreamData =
+    movieProvider?.US?.flatrate?.length >= 1
+      ? movieProvider?.US
+      : alternativeMovieData;
 
   return (
     <div
@@ -106,11 +123,20 @@ export default function SelectedResultPage() {
           <Overview overview={overview} />
         </div>
       </section>
+
       <CastSection movieCredits={movieCredits} />
 
       {movieVids?.results?.length !== 0 && (
         <VideosSection theme={theme} video={movieVids} />
       )}
+
+      <hr className="mx-auto w-[90%]" />
+
+      <WatchSection
+        theme={theme}
+        movieProvider={movieStreamData}
+        movieStreamLink={movieStreamLink}
+      />
     </div>
   );
 }

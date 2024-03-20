@@ -14,6 +14,7 @@ const themePersistConfig = {
   version: 1,
   storage,
 };
+
 import {
   FLUSH,
   REHYDRATE,

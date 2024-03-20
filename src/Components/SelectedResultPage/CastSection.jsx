@@ -29,5 +29,5 @@ export default function CastSection({ movieCredits }) {
 }
 
 CastSection.propTypes = {
-  movieCredits: PropTypes.obj,
+  movieCredits: PropTypes.any,
 };

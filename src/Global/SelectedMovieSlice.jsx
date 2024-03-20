@@ -5,6 +5,7 @@ const initialState = {
   movieData: [],
   movieVids: [],
   movieCredits: [],
+  movieProvider: [],
 };
 
 const SelectedMovieSlice = createSlice({
@@ -19,6 +20,9 @@ const SelectedMovieSlice = createSlice({
     },
     getSelectedMovieCredits(state, action) {
       state.movieCredits = action.payload;
+    },
+    getSelectedMovieProvider(state, action) {
+      state.movieProvider = action.payload;
     },
   },
 });
@@ -64,6 +68,7 @@ export function getMovieVideo(movieID, type) {
     }
   };
 }
+
 export function getMovieCredits(movieID, type) {
   return async function (dispatch) {
     try {
@@ -78,6 +83,27 @@ export function getMovieCredits(movieID, type) {
       dispatch({
         type: "selected_movie/getSelectedMovieCredits",
         payload: request.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function getMovieProvider(movie_id, movie_type) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/${movie_type}/${movie_id}/watch/providers`,
+        {
+          params: {
+            api_key: import.meta.env.VITE_TMDB_API_KEY,
+          },
+        },
+      );
+      dispatch({
+        type: "selected_movie/getSelectedMovieProvider",
+        payload: data.results,
       });
     } catch (error) {
       console.log(error.message);

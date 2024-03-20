@@ -39,5 +39,5 @@ export default function VideosSection({ theme, video }) {
 
 VideosSection.propTypes = {
   theme: PropTypes.string,
-  video: PropTypes.array,
+  video: PropTypes.any,
 };
