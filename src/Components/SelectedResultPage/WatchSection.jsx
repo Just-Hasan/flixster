@@ -6,7 +6,7 @@ export default function WatchSection({
   movieStreamLink,
 }) {
   //   const { link, flatrate } = movieProvider;
-  console.log(movieProvider);
+
   return (
     <section
       className={`transition-all duration-300  ${theme === "dark" ? "bg-[#1c1c1c] text-white" : "bg-[#f4f4f4] text-black"} p-[24px] ease-in-out`}

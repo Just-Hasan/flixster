@@ -18,6 +18,7 @@ import BackdropPoster from "../Components/SelectedResultPage/BackdropPoster";
 import CastSection from "../Components/SelectedResultPage/CastSection";
 import VideosSection from "../Components/SelectedResultPage/VideosSection";
 import WatchSection from "../Components/SelectedResultPage/WatchSection";
+import TvSeasons from "../Components/SelectedResultPage/TvSeasons";
 
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export default function SelectedResultPage() {
   );
   const id = searchParam.get("id");
   const type = searchParam.get("type");
-  console.log(movieProvider);
+
   const {
     title,
     budget,
@@ -45,6 +46,7 @@ export default function SelectedResultPage() {
     first_air_date,
     production_countries,
     created_by,
+    seasons,
   } = movieData;
 
   useEffect(() => {
@@ -82,6 +84,10 @@ export default function SelectedResultPage() {
     movieProvider?.US?.flatrate?.length >= 1
       ? movieProvider?.US
       : alternativeMovieData;
+
+  const tvHasSeasons = type === "tv" && seasons?.length > 0;
+
+  console.log(seasons);
 
   return (
     <div
@@ -137,6 +143,10 @@ export default function SelectedResultPage() {
         movieProvider={movieStreamData}
         movieStreamLink={movieStreamLink}
       />
+
+      {tvHasSeasons && <hr className="mx-auto w-[90%]" />}
+
+      {tvHasSeasons && <TvSeasons seasons={seasons} />}
     </div>
   );
 }
