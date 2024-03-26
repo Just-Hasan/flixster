@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import MovieItem from "../MovieItem";
+import MovieItem from "../../ui/MovieItem";
 
 export default function PopularSection() {
   const { popular } = useSelector((store) => store.homepage);

@@ -19,8 +19,8 @@ import PopularSection from "../Components/Homepage/PopularSection";
 import TopRatedSection from "../Components/Homepage/TopRatedSection";
 import { Link } from "react-router-dom";
 import UpcomingSection from "../Components/Homepage/UpcomingSection";
-import MovieItem from "../Components/MovieItem";
-
+import MovieItem from "../ui/MovieItem";
+import Button from "../ui/Button";
 export default function Homepage() {
   const [movieSection, setMovieAction] = useState(0);
   const homepageData = useSelector((store) => store.homepage);
@@ -83,7 +83,7 @@ export default function Homepage() {
         } py-16 duration-300 ease-in-out`}
       >
         <div className="mx-auto w-[90%]">
-          <nav className="mb-[36px] mt-[48px] grid grid-cols-3 items-center justify-between text-subTitle">
+          <nav className="mb-9 mt-12 grid grid-cols-3 items-center justify-between text-subTitle">
             <h2
               className={`${
                 theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
@@ -91,7 +91,7 @@ export default function Homepage() {
             >
               {movieType[movieSection].type} Movie
             </h2>
-            <div className="flex items-center gap-8 justify-self-center overflow-hidden rounded-full  bg-[#f4f4f4] text-[18px] text-[#1c1c1c]">
+            <div className="flex items-center gap-8 justify-self-center overflow-hidden rounded-full bg-[#f4f4f4] text-[18px] text-[#1c1c1c] ring ring-gray-200">
               {movieType.map((movie, i) => {
                 return (
                   <button
@@ -109,7 +109,7 @@ export default function Homepage() {
             <Link
               to={`${movieType[movieSection].type}`}
               className={`text-[18px] underline ${
-                theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
+                theme === "dark" ? "text-white" : "text-black"
               } justify-self-end`}
             >
               See all

@@ -1,7 +1,14 @@
 import { FaPlay } from "react-icons/fa";
 import PropTypes from "prop-types";
+import Button from "../../ui/Button";
 
-export default function RatingAndTrailerBtn({ theme, vote_average }) {
+export default function RatingAndTrailerBtn({
+  theme,
+  vote_average,
+  goToVidsSection,
+  goToWatchSection,
+  officialWeb,
+}) {
   return (
     <div className="mb-[16px] flex items-center gap-4  text-[18px] leading-[1.4]">
       <p
@@ -13,33 +20,15 @@ export default function RatingAndTrailerBtn({ theme, vote_average }) {
       >
         {vote_average?.toFixed(1)}
       </p>
-      <button
-        className={`${
-          theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
-        } w-max rounded-full border-2 p-5 font-bold ${
-          theme === "dark" ? "border-[#f4f4f4]" : "border-[#1c1c1c]"
-        }`}
-      >
+      <Button type="external_link" ext_link={officialWeb}>
         Detail
-      </button>
-      <button
-        className={`${
-          theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
-        } w-max rounded-full border-2 p-5 font-bold ${
-          theme === "dark" ? "border-[#f4f4f4]" : "border-[#1c1c1c]"
-        }`}
-      >
+      </Button>
+      <Button handlerFunc={goToVidsSection} type="secondary">
         Trailer
-      </button>
-      <button
-        className={`${
-          theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
-        } w-max rounded-full border-2 p-5 font-bold ${
-          theme === "dark" ? "border-[#f4f4f4]" : "border-[#1c1c1c]"
-        }`}
-      >
+      </Button>
+      <Button type="secondary" handlerFunc={goToWatchSection}>
         <FaPlay className="text-[24px]"></FaPlay>
-      </button>
+      </Button>
       <span>Watch Movie</span>
     </div>
   );
@@ -48,4 +37,7 @@ export default function RatingAndTrailerBtn({ theme, vote_average }) {
 RatingAndTrailerBtn.propTypes = {
   theme: PropTypes.string,
   vote_average: PropTypes.any,
+  goToVidsSection: PropTypes.func,
+  goToWatchSection: PropTypes.func,
+  officialWeb: PropTypes.any,
 };

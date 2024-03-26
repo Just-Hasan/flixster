@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-
+import { useRef } from "react";
 import {
   getMovieData,
   getMovieVideo,
@@ -19,6 +19,7 @@ import CastSection from "../Components/SelectedResultPage/CastSection";
 import VideosSection from "../Components/SelectedResultPage/VideosSection";
 import WatchSection from "../Components/SelectedResultPage/WatchSection";
 import TvSeasons from "../Components/SelectedResultPage/TvSeasons";
+import Button from "../ui/Button";
 
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ export default function SelectedResultPage() {
   const { movieData, movieVids, movieCredits, movieProvider } = useSelector(
     (store) => store.selected_movie,
   );
+  const vidsSection = useRef(null);
+  const watchSection = useRef(null);
+
   const id = searchParam.get("id");
   const type = searchParam.get("type");
 
@@ -47,7 +51,17 @@ export default function SelectedResultPage() {
     production_countries,
     created_by,
     seasons,
+    homepage,
   } = movieData;
+
+  /////////////////////////////////////[Handler Function]
+  function goToVidsSection() {
+    vidsSection?.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function goToWatchSection() {
+    watchSection?.current?.scrollIntoView({ behavior: "smooth" });
+  }
 
   useEffect(() => {
     dispatch(getMovieData(id, type));
@@ -87,7 +101,7 @@ export default function SelectedResultPage() {
 
   const tvHasSeasons = type === "tv" && seasons?.length > 0;
 
-  console.log(seasons);
+  console.log(movieData);
 
   return (
     <div
@@ -113,7 +127,13 @@ export default function SelectedResultPage() {
 
           <Genre genre={genre} theme={theme} />
 
-          <RatingAndTrailerBtn theme={theme} vote_average={vote_average} />
+          <RatingAndTrailerBtn
+            theme={theme}
+            vote_average={vote_average}
+            goToVidsSection={goToVidsSection}
+            goToWatchSection={goToWatchSection}
+            officialWeb={homepage}
+          />
 
           <MovieDetails
             first_air_date={first_air_date}
@@ -133,16 +153,19 @@ export default function SelectedResultPage() {
       <CastSection movieCredits={movieCredits} />
 
       {movieVids?.results?.length !== 0 && (
-        <VideosSection theme={theme} video={movieVids} />
+        <div ref={vidsSection}>
+          <VideosSection theme={theme} video={movieVids} />
+        </div>
       )}
 
       <hr className="mx-auto w-[90%]" />
-
-      <WatchSection
-        theme={theme}
-        movieProvider={movieStreamData}
-        movieStreamLink={movieStreamLink}
-      />
+      <div ref={watchSection}>
+        <WatchSection
+          theme={theme}
+          movieProvider={movieStreamData}
+          movieStreamLink={movieStreamLink}
+        />
+      </div>
 
       {tvHasSeasons && <hr className="mx-auto w-[90%]" />}
 

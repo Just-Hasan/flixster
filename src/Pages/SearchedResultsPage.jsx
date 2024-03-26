@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import MovieItem from "../Components/MovieItem";
+import MovieItem from "../ui/MovieItem";
 import { useSearchParams } from "react-router-dom";
 
 export default function SearchedResultsPage() {

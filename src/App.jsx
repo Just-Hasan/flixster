@@ -2,14 +2,14 @@
 // import SearchedResultsPage from "./Pages/SearchedResultsPage";
 // import SelectedResultPage from "./Pages/SelectedResultPage";
 //
-import Navbar from "./Components/Navbar";
+import Navbar from "./ui/Navbar";
+import Footer from "./ui/Footer";
 import { Route, Routes, Navigate } from "react-router";
-import Footer from "./Components/Footer";
 import { useSelector } from "react-redux";
 import { Suspense } from "react";
 //
 import { lazy } from "react";
-import Loader from "./Components/Loader";
+import Loader from "./ui/Loader";
 const Homepage = lazy(() => import("./Pages/Homepage"));
 const SearchedResultsPage = lazy(() => import("./Pages/SearchedResultsPage"));
 const SelectedResultPage = lazy(() => import("./Pages/SelectedResultPage"));
