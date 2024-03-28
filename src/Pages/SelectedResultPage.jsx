@@ -84,6 +84,10 @@ export default function SelectedResultPage() {
     dispatch(getMovieProvider(id, type));
   }, [dispatch, id, type]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const genre = genres?.map((genre) => genre.name);
 
   const objectValue = Object.values(movieProvider);

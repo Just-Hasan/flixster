@@ -1,22 +1,26 @@
-import { useEffect } from "react";
 import { getMoviesData } from "../Global/MoviesPageSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useQuery } from "react-query";
+import { useSearchParams } from "react-router-dom";
 import MovieItem from "../ui/MovieItem";
 import SortBy from "../Components/MoviesPage/SortBy";
-import { useSearchParams } from "react-router-dom";
-
+import Pagination from "../Components/MoviesPage/Pagination";
 export default function MoviesPage() {
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const sort = searchParams.get("sort_by");
-  const dispatch = useDispatch();
-  const {
-    movie: { movies },
-    theme: { theme },
-  } = useSelector((store) => store);
+  const pageNum = searchParams.get("page");
 
-  useEffect(() => {
-    dispatch(getMoviesData(sort));
-  }, [dispatch, sort]);
+  const moviePageQuery = useQuery({
+    queryKey: ["movie", { sort, pageNum }],
+    queryFn: () => dispatch(getMoviesData(sort, pageNum)),
+    refetchOnWindowFocus: false,
+  });
+
+  const { movies } = useSelector((store) => store.movie);
+  console.log(movies);
+  const { theme } = useSelector((store) => store.theme);
+  console.log(movies.total_pages);
 
   return (
     <div
@@ -35,6 +39,12 @@ export default function MoviesPage() {
           );
         })}
       </ul>
+
+      <Pagination
+        resultsLength={movies?.results?.length}
+        totalPages={movies?.total_pages}
+        totalResults={movies?.total_results}
+      />
     </div>
   );
 }

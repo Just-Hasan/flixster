@@ -15,7 +15,7 @@ export default function SortBy() {
     <select
       onChange={(e) => updateSortBy(e.target.value)}
       value={searchParams.get("sort_by")}
-      className={`${theme === "dark" ? "ring-offset-5 rounded-full bg-white px-4 py-2 text-black outline-none " : " rounded-full bg-black px-4 py-2 text-white outline-none ring ring-2 ring-white ring-offset-2"}  text-3xl`}
+      className={`${theme === "dark" ? "ring-offset-5 rounded-full bg-white px-4 py-2 text-black outline-none " : " rounded-full bg-black px-4 py-2 text-white outline-none  ring-2 ring-white ring-offset-2"}  text-3xl`}
     >
       <option value="popularity.desc">Popularity</option>
       <option value="vote_count.desc">Vote</option>
