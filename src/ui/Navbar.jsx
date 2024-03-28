@@ -50,7 +50,10 @@ export default function Navbar() {
             Home
           </NavLink>
 
-          <NavLink className="p-4 text-[18px]" to={"/movie"}>
+          <NavLink
+            className="p-4 text-[18px]"
+            to={"/movie?sort_by=popularity.desc&page=1"}
+          >
             Movies
           </NavLink>
 

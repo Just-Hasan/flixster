@@ -10,6 +10,7 @@ import { Suspense } from "react";
 //
 import { lazy } from "react";
 import Loader from "./ui/Loader";
+import MoviesPage from "./Pages/MoviesPage";
 const Homepage = lazy(() => import("./Pages/Homepage"));
 const SearchedResultsPage = lazy(() => import("./Pages/SearchedResultsPage"));
 const SelectedResultPage = lazy(() => import("./Pages/SelectedResultPage"));
@@ -34,6 +35,7 @@ function App() {
             <Route path="selected" element={<SelectedResultPage />} />
           </Route>
           <Route path="/movie">
+            <Route index element={<MoviesPage />}></Route>
             <Route path="selected" element={<SelectedResultPage />} />
           </Route>
         </Routes>

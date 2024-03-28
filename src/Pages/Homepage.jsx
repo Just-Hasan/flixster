@@ -91,13 +91,14 @@ export default function Homepage() {
             >
               {movieType[movieSection].type} Movie
             </h2>
-            <div className="flex items-center gap-8 justify-self-center overflow-hidden rounded-full bg-[#f4f4f4] text-[18px] text-[#1c1c1c] ring ring-gray-200">
+            <div className="flex items-center gap-8 justify-self-center overflow-hidden rounded-full bg-[#f4f4f4] p-2 text-[18px] text-[#1c1c1c] ring ring-gray-200">
               {movieType.map((movie, i) => {
                 return (
                   <button
                     key={i}
                     className={`p-4 ${
-                      movieSection === i && "bg-[#fee715]"
+                      movieSection === i &&
+                      "rounded-full border-2 border-stone-200 bg-[#fee715]"
                     } text-center`}
                     onClick={() => setMovieAction(i)}
                   >
