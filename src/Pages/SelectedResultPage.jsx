@@ -5,6 +5,7 @@ import {
   getMovieVideo,
   getMovieCredits,
   getMovieProvider,
+  getMovieSimilar,
 } from "../Global/SelectedMovieSlice";
 
 import { useEffect } from "react";
@@ -19,15 +20,14 @@ import CastSection from "../Components/SelectedResultPage/CastSection";
 import VideosSection from "../Components/SelectedResultPage/VideosSection";
 import WatchSection from "../Components/SelectedResultPage/WatchSection";
 import TvSeasons from "../Components/SelectedResultPage/TvSeasons";
-import Button from "../ui/Button";
+import RecommendationsSection from "../Components/SelectedResultPage/RecommendationsSection";
 
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
   const [searchParam] = useSearchParams();
   const { theme } = useSelector((store) => store.theme);
-  const { movieData, movieVids, movieCredits, movieProvider } = useSelector(
-    (store) => store.selected_movie,
-  );
+  const { movieData, movieVids, movieCredits, movieProvider, similarMovie } =
+    useSelector((store) => store.selected_movie);
   const vidsSection = useRef(null);
   const watchSection = useRef(null);
 
@@ -85,8 +85,12 @@ export default function SelectedResultPage() {
   }, [dispatch, id, type]);
 
   useEffect(() => {
+    dispatch(getMovieSimilar(id, type));
+  }, [dispatch, id, type]);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  }, [id]);
 
   const genre = genres?.map((genre) => genre.name);
 
@@ -105,7 +109,7 @@ export default function SelectedResultPage() {
 
   const tvHasSeasons = type === "tv" && seasons?.length > 0;
 
-  console.log(movieData);
+  const movieTvHasRecommendations = similarMovie.length > 0;
 
   return (
     <div
@@ -163,7 +167,6 @@ export default function SelectedResultPage() {
       )}
 
       <hr className="mx-auto mt-16 w-[90%]" />
-
       <div ref={watchSection}>
         <WatchSection
           theme={theme}
@@ -172,9 +175,19 @@ export default function SelectedResultPage() {
         />
       </div>
 
-      {tvHasSeasons && <hr className="mx-auto w-[90%]" />}
+      {tvHasSeasons && (
+        <>
+          <hr className="mx-auto w-[90%]"></hr>
+          <TvSeasons seasons={seasons} />
+        </>
+      )}
 
-      {tvHasSeasons && <TvSeasons seasons={seasons} />}
+      {movieTvHasRecommendations && (
+        <>
+          <hr className="mx-auto mt-16 w-[90%]" />
+          <RecommendationsSection movie={similarMovie} type={type} />
+        </>
+      )}
     </div>
   );
 }

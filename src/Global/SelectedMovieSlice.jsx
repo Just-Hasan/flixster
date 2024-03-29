@@ -6,6 +6,7 @@ const initialState = {
   movieVids: [],
   movieCredits: [],
   movieProvider: [],
+  similarMovie: [],
 };
 
 const SelectedMovieSlice = createSlice({
@@ -23,6 +24,9 @@ const SelectedMovieSlice = createSlice({
     },
     getSelectedMovieProvider(state, action) {
       state.movieProvider = action.payload;
+    },
+    getSelectedMovieSimilar(state, action) {
+      state.similarMovie = action.payload;
     },
   },
 });
@@ -103,6 +107,25 @@ export function getMovieProvider(movie_id, movie_type) {
       );
       dispatch({
         type: "selected_movie/getSelectedMovieProvider",
+        payload: data.results,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function getMovieSimilar(movie_id, movie_type) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_TMDB_BASE_URL}${movie_type}/${movie_id}/recommendations`,
+        {
+          params: { api_key: import.meta.env.VITE_TMDB_API_KEY },
+        },
+      );
+      dispatch({
+        type: "selected_movie/getSelectedMovieSimilar",
         payload: data.results,
       });
     } catch (error) {
