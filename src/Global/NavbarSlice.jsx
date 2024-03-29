@@ -37,7 +37,6 @@ export function searchMovieOrTv(query) {
           },
         },
       );
-      console.log(data);
       dispatch({
         type: "navbar/searchedData",
         payload: {

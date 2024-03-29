@@ -7,7 +7,7 @@ export default function SearchedResultsPage() {
   const { theme } = useSelector((store) => store.theme);
   const [searchParam] = useSearchParams();
   const query = searchParam.get("query");
-
+  console.log(searched);
   return (
     <div
       className={`pb-24 pt-48 ${

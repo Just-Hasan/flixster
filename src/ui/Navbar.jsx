@@ -1,14 +1,15 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoSunny } from "react-icons/io5";
 import { FaMoon } from "react-icons/fa6";
-import Select from "react-select";
 import { NavLink } from "react-router-dom";
-import style from "../Styles/Navbar.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { searchQuery } from "../Global/NavbarSlice";
 import { setTheme } from "../Global/ThemeSlice";
 import { searchMovieOrTv } from "../Global/NavbarSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import style from "../Styles/Navbar.module.css";
+import Select from "react-select";
 
 const options = [
   { value: "light", label: <IoSunny className="text-2xl text-black" /> },
@@ -16,19 +17,19 @@ const options = [
 ];
 
 export default function Navbar() {
+  const [searchParams] = useSearchParams();
   const { searchValue, searched, page, totalPage } = useSelector(
     (store) => store.navbar,
   );
+  const currentQuery = searchParams.get("query");
   const { theme } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   function handleSubmit(e) {
     e.preventDefault();
     if (searchValue === "") {
       navigate("/home");
       dispatch(searchQuery(""));
-      return;
     }
     dispatch(searchMovieOrTv(searchValue));
     navigate(`show/searched?query=${searchValue}&page=${page}`);
@@ -38,6 +39,10 @@ export default function Navbar() {
   const handleToggleTheme = function (selectedOption) {
     dispatch(setTheme(selectedOption.value));
   };
+
+  useEffect(() => {
+    dispatch(searchMovieOrTv(currentQuery));
+  }, [currentQuery, dispatch]);
 
   return (
     <nav className="fixed z-50 w-full  bg-[#2c2c2c] bg-opacity-20  p-4 text-[#fee715] backdrop-blur-sm">

@@ -162,7 +162,8 @@ export default function SelectedResultPage() {
         </div>
       )}
 
-      <hr className="mx-auto w-[90%]" />
+      <hr className="mx-auto mt-16 w-[90%]" />
+
       <div ref={watchSection}>
         <WatchSection
           theme={theme}

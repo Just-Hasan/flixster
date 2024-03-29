@@ -11,17 +11,15 @@ export default function MoviesPage() {
   const sort = searchParams.get("sort_by");
   const pageNum = searchParams.get("page");
 
-  const moviePageQuery = useQuery({
+  const { data: movies, isLoading } = useQuery({
     queryKey: ["movie", { sort, pageNum }],
     queryFn: () => dispatch(getMoviesData(sort, pageNum)),
-    refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 
-  const { movies } = useSelector((store) => store.movie);
-  console.log(movies);
+  // const { movies } = useSelector((store) => store.movie);
   const { theme } = useSelector((store) => store.theme);
-  console.log(movies.total_pages);
-
+  console.log(isLoading);
   return (
     <div
       className={`pb-24 pt-48 ${

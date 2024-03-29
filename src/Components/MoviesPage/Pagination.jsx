@@ -22,6 +22,7 @@ export default function Pagination({
   function handleChangePage(page_num) {
     newPage.set("page", page_num);
     setSearchParams(newPage.toString());
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function handlePrevPage() {
