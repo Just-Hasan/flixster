@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
-export default function Pagination({
-  resultsLength,
-  totalPages,
-  totalResults,
-}) {
+import { useSelector } from "react-redux";
+import { getTheme } from "../Global/ThemeSlice";
+import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa";
+export default function Pagination({ resultsLength, totalPages }) {
+  const theme = useSelector(getTheme);
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
   const [initValue, setInitValue] = useState(Number(page));
@@ -50,35 +51,41 @@ export default function Pagination({
       setSearchParams(newPage.toString());
     }
   }, [currentPage, newPage, setSearchParams, totalPages]);
-  console.log(currentPage > totalPages);
+
   return (
     <div
-      className="mx-auto mt-16 flex w-max gap-x-2 rounded-full text-center text-2xl
+      className="mx-auto mt-16 flex w-max items-center
+      justify-center gap-x-2 rounded-full text-center text-2xl
      "
     >
       <button
         onClick={handlePrevPage}
-        className="rounded-full bg-white px-4 py-2 text-black transition-all duration-200 ease-in-out hover:bg-accent hover:font-semibold"
+        className="rounded-full border-2 p-4  transition-all duration-200 ease-in-out hover:font-semibold"
       >
-        &larr; Prev
+        <FaAngleLeft />
       </button>
-      {testArr.slice(0, 5).map((num) => {
-        return (
-          <button
-            key={num}
-            onClick={() => handleChangePage(num)}
-            defaultValue={() => searchParams.get("page")}
-            className={`rounded-full border-2 ${page === String(num) ? "border-transparent bg-accent text-black" : "text-white"} border-white px-4 py-2 transition-all duration-200 ease-in-out hover:bg-white hover:text-black`}
-          >
-            {num}
-          </button>
-        );
-      })}
+      <div className="flex items-center gap-4">
+        {testArr.slice(0, 5).map((num) => {
+          return (
+            <button
+              key={num}
+              onClick={() => handleChangePage(num)}
+              defaultValue={() => searchParams.get("page")}
+              className={`rounded-full border-2 border-gray-200 p-3 transition-all
+            duration-200 ease-in-out hover:border-transparent
+            ${theme === "dark" ? "hover:bg-white hover:text-black" : "hover:bg-black hover:text-white"}
+            ${page === String(num) && "border-transparent bg-accent text-black"}`}
+            >
+              {num}
+            </button>
+          );
+        })}
+      </div>
       <button
         onClick={() => handleNextPage()}
-        className="rounded-full bg-white px-4 py-2 text-black transition-all duration-200 ease-in-out hover:bg-accent hover:font-semibold"
+        className="rounded-full border-2 p-4 transition-all  duration-200 ease-in-out hover:font-semibold"
       >
-        Next &rarr;
+        <FaAngleRight />
       </button>
     </div>
   );

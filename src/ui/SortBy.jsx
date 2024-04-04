@@ -7,10 +7,10 @@ export default function SortBy() {
 
   function updateSortBy(categorie) {
     const newParams = new URLSearchParams(searchParams);
-    console.log(newParams.toString());
     newParams.set("sort_by", categorie);
     setSearchParams(newParams.toString());
   }
+
   return (
     <select
       onChange={(e) => updateSortBy(e.target.value)}

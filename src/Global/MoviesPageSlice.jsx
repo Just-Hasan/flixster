@@ -3,7 +3,6 @@ import axios from "axios";
 
 const initialState = {
   movies: [],
-  totalPages: 1,
 };
 const MoviesPageSlice = createSlice({
   name: "movies",
@@ -40,21 +39,3 @@ export function getMoviesData(sort_by, page_num) {
 }
 
 export default MoviesPageSlice.reducer;
-// export async function getMovieData(sort_by, page_num) {
-//   try {
-//     const { data } = await axios.get(
-//       `${import.meta.env.VITE_TMDB_BASE_URL}discover/movie`,
-//       {
-//         params: {
-//           api_key: import.meta.env.VITE_TMDB_API_KEY,
-//           page: page_num || 1,
-//           sort_by: sort_by,
-//         },
-//       },
-//     );
-
-//     return data;
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }

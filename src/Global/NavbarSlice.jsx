@@ -4,8 +4,6 @@ import axios from "axios";
 const initialState = {
   searchValue: "",
   searched: [],
-  page: 1,
-  totalPage: 1,
 };
 
 const navbarSlice = createSlice({
@@ -17,8 +15,6 @@ const navbarSlice = createSlice({
     },
     searchedData(state, action) {
       state.searched = action.payload.data;
-      state.totalPage = action.payload.totalPages;
-      state.page = action.payload.currentPage;
     },
   },
 });
@@ -41,8 +37,6 @@ export function searchMovieOrTv(query) {
         type: "navbar/searchedData",
         payload: {
           data: data.results,
-          totalPages: data.total_pages,
-          currentPage: data.page,
         },
       });
     } catch (error) {

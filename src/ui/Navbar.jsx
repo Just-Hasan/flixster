@@ -18,9 +18,7 @@ const options = [
 
 export default function Navbar() {
   const [searchParams] = useSearchParams();
-  const { searchValue, searched, page, totalPage } = useSelector(
-    (store) => store.navbar,
-  );
+  const { searchValue, page } = useSelector((store) => store.navbar);
   const currentQuery = searchParams.get("query");
   const { theme } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
@@ -62,7 +60,10 @@ export default function Navbar() {
             Movies
           </NavLink>
 
-          <NavLink className="p-4 text-[18px]" to={"/tv"}>
+          <NavLink
+            className="p-4 text-[18px]"
+            to={"/tv?sort_by=popularity.desc&page=1"}
+          >
             TV Show
           </NavLink>
           <NavLink className="p-4 text-[18px]" to={"/pricing"}>

@@ -3,23 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import MovieItem from "../ui/MovieItem";
-import SortBy from "../Components/MoviesPage/SortBy";
-import Pagination from "../Components/MoviesPage/Pagination";
+import SortBy from "../ui/SortBy";
+import Pagination from "../ui/Pagination";
+import { getTheme } from "../Global/ThemeSlice";
 export default function MoviesPage() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const sort = searchParams.get("sort_by");
   const pageNum = searchParams.get("page");
 
-  const { data: movies, isLoading } = useQuery({
+  const { data: movies } = useQuery({
     queryKey: ["movie", { sort, pageNum }],
     queryFn: () => dispatch(getMoviesData(sort, pageNum)),
     keepPreviousData: true,
   });
 
-  // const { movies } = useSelector((store) => store.movie);
-  const { theme } = useSelector((store) => store.theme);
-  console.log(isLoading);
+  const theme = useSelector(getTheme);
   return (
     <div
       className={`pb-24 pt-48 ${

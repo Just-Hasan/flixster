@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import { lazy } from "react";
 import Loader from "./ui/Loader";
 import MoviesPage from "./Pages/MoviesPage";
+import TvPage from "./Pages/TvPage";
 const Homepage = lazy(() => import("./Pages/Homepage"));
 const SearchedResultsPage = lazy(() => import("./Pages/SearchedResultsPage"));
 const SelectedResultPage = lazy(() => import("./Pages/SelectedResultPage"));
@@ -32,10 +33,11 @@ function App() {
             <Route path="searched" element={<SearchedResultsPage />} />
           </Route>
           <Route path="/tv">
+            <Route index element={<TvPage />} />
             <Route path="selected" element={<SelectedResultPage />} />
           </Route>
           <Route path="/movie">
-            <Route index element={<MoviesPage />}></Route>
+            <Route index element={<MoviesPage />} />
             <Route path="selected" element={<SelectedResultPage />} />
           </Route>
         </Routes>
