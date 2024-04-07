@@ -8,7 +8,7 @@ import { fetchSearchData } from "../api/tmdb";
 import { v4 as RandomID } from "uuid";
 import { useInView } from "react-intersection-observer";
 export default function SearchedResultsPage() {
-  const { ref, inView } = useInView({ rootMargin: "0px 0px 250px 0px" });
+  const { ref, inView } = useInView({ rootMargin: "0px 0px 0px 0px" });
   const { theme } = useSelector((store) => store.theme);
   const [searchParam] = useSearchParams();
   const query = searchParam.get("query");
