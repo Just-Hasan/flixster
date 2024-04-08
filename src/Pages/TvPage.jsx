@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { getTheme } from "../Global/ThemeSlice";
 import MovieItem from "../ui/MovieItem";

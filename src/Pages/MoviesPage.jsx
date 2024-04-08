@@ -1,6 +1,6 @@
 import { getMoviesData } from "../Global/MoviesPageSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import MovieItem from "../ui/MovieItem";
 import SortBy from "../ui/SortBy";

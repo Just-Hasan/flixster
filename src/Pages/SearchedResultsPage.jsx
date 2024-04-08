@@ -7,8 +7,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchSearchData } from "../api/tmdb";
 import { v4 as RandomID } from "uuid";
 import { useInView } from "react-intersection-observer";
+import Loader2 from "../ui/Loader2";
+import { FaArrowUp } from "react-icons/fa";
 export default function SearchedResultsPage() {
-  const { ref, inView } = useInView({ rootMargin: "0px 0px 0px 0px" });
+  const [ref, inView] = useInView({ rootMargin: "0px 0px 0px 0px" });
   const { theme } = useSelector((store) => store.theme);
   const [searchParam] = useSearchParams();
   const query = searchParam.get("query");
@@ -25,6 +27,8 @@ export default function SearchedResultsPage() {
     }
   }, [query, navigate]);
 
+  console.log(inView);
+
   /////////////////////////////////////[useInfiniteQuery]
   const {
     data,
@@ -33,11 +37,12 @@ export default function SearchedResultsPage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    fetchStatus,
   } = useInfiniteQuery({
     queryKey: ["show", "searched", { query }],
     queryFn: fetchSearchData,
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPage) => {
+    getNextPageParam: (lastPage) => {
       // console.log(lastPage, allPage);
       const nextPage = lastPage?.page + 1;
       return nextPage <= lastPage.total_pages ? nextPage : undefined;
@@ -45,14 +50,25 @@ export default function SearchedResultsPage() {
   });
 
   useEffect(() => {
-    if (inView) {
+    if (hasNextPage && inView) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   const searchedMovieData = data?.pages
     ?.map((item) => item.results?.map((res) => res))
-    .flat();
+    .flat()
+    .map((movie, index, arr) => {
+      return (
+        <MovieItem
+          movie={movie}
+          index={index}
+          array={arr}
+          type={movie.media_type}
+          key={RandomID()}
+        />
+      );
+    });
 
   const hasMultiplePage = data?.pages?.length > 1;
 
@@ -60,9 +76,11 @@ export default function SearchedResultsPage() {
   // console.log(searchedMovieData);
   // console.log(fetchStatus);
 
-  if (status === "pending") return <h1 className="text-[240px]">Loading</h1>;
+  if (status === "pending") return <Loader2 />;
 
   if (status === "error") return <h1>{error.message}</h1>;
+
+  if (fetchStatus && !isFetchingNextPage === "fetching") return <Loader2 />;
 
   return (
     <div
@@ -75,17 +93,7 @@ export default function SearchedResultsPage() {
       </h2>
 
       <ul className="grid grid-cols-5 gap-8">
-        {searchedMovieData?.map((movie, index, arr) => {
-          return (
-            <MovieItem
-              movie={movie}
-              index={index}
-              array={arr}
-              type={movie.media_type}
-              key={RandomID()}
-            />
-          );
-        })}
+        {searchedMovieData}
         <p style={{ opacity: "0%" }} ref={ref}>
           end data
         </p>
@@ -97,7 +105,7 @@ export default function SearchedResultsPage() {
 
       {hasMultiplePage && !hasNextPage && (
         <h2 className="mt-12 text-center text-2xl">
-          You&apos;ve reach the end of the data
+          You&apos;ve reach the end of pages
         </h2>
       )}
 
@@ -105,7 +113,7 @@ export default function SearchedResultsPage() {
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         className={`fixed bottom-[7%] opacity-0 ${hasMultiplePage && "opacity-100"} right-[5%] rounded-full bg-red-500 p-4 text-2xl transition-all duration-300 ease-in-out`}
       >
-        Go Up
+        <FaArrowUp />
       </button>
     </div>
   );

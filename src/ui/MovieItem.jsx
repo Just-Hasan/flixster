@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-export default function MovieItem({ movie, type, inRef }) {
+export default function MovieItem({ movie, type, index, array }) {
   const mediaType = movie?.media_type;
 
   const hasPoster =
@@ -16,7 +16,10 @@ export default function MovieItem({ movie, type, inRef }) {
       key={movie?.id}
       className="overflow-hidden "
     >
-      <div className={`relative h-full w-full`}>
+      <div
+        className={`relative h-full w-full`}
+        // ref={index === array?.length - 1 ? inRef : null}
+      >
         <img
           src={hasPoster}
           alt="image not found"
@@ -29,6 +32,7 @@ export default function MovieItem({ movie, type, inRef }) {
 
 MovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
-  inRef: PropTypes.any,
   type: PropTypes.string.isRequired,
+  index: PropTypes.number,
+  array: PropTypes.array,
 };

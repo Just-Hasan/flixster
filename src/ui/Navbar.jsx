@@ -38,7 +38,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed z-50 w-full  bg-[#2c2c2c] bg-opacity-20  p-4 text-[#fee715] backdrop-blur-sm">
+    <nav className="fixed z-10 w-full  bg-[#2c2c2c] bg-opacity-20  p-4 text-[#fee715] backdrop-blur-sm">
       <div className="mx-auto flex w-[90%] items-center justify-between">
         <div>
           <h1 className="text-[48px] font-bold">Flixster</h1>
