@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function Genre({ genre, theme }) {
   return (
-    <p className="mb-[32px] flex gap-4 text-2xl">
+    <p className="flex gap-4 text-2xl">
       {genre?.map((type) => (
         <span
           key={type}

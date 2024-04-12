@@ -61,8 +61,8 @@ export default function Navbar() {
           >
             TV Show
           </NavLink>
-          <NavLink className="p-4 text-[18px]" to={"/pricing"}>
-            Pricing
+          <NavLink className="p-4 text-[18px]" to={"/favourite"}>
+            Favourite
           </NavLink>
         </ul>
         <div className="flex w-1/4 items-center justify-end gap-4">

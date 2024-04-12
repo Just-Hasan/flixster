@@ -21,6 +21,7 @@ import VideosSection from "../Components/SelectedResultPage/VideosSection";
 import WatchSection from "../Components/SelectedResultPage/WatchSection";
 import TvSeasons from "../Components/SelectedResultPage/TvSeasons";
 import RecommendationsSection from "../Components/SelectedResultPage/RecommendationsSection";
+import AddToFavouriteSection from "../Components/SelectedResultPage/AddToFavouriteSection";
 
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
@@ -39,7 +40,6 @@ export default function SelectedResultPage() {
     budget,
     genres,
     name,
-    original_title = title,
     overview,
     poster_path,
     release_date,
@@ -110,6 +110,14 @@ export default function SelectedResultPage() {
   const tvHasSeasons = type === "tv" && seasons?.length > 0;
 
   const movieTvHasRecommendations = similarMovie.length > 0;
+  // console.log(`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}`);
+  const favShowData = {
+    id: Number(id),
+    title: title || name,
+    type,
+    genres,
+    posterImg: `${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}`,
+  };
 
   return (
     <div
@@ -128,8 +136,8 @@ export default function SelectedResultPage() {
           theme={theme}
         />
 
-        <div className="translate-x-[-10%]  p-4">
-          <h2 className="mb-[16px] font-compressed text-[42px] font-bold">
+        <div className="flex translate-x-[-10%] flex-col gap-y-12 p-4">
+          <h2 className="font-compressed text-[42px] font-bold">
             {title || name}
           </h2>
 
@@ -158,6 +166,8 @@ export default function SelectedResultPage() {
         </div>
       </section>
 
+      <AddToFavouriteSection favShowData={favShowData} />
+
       <CastSection movieCredits={movieCredits} />
 
       {movieVids?.results?.length !== 0 && (
@@ -165,7 +175,6 @@ export default function SelectedResultPage() {
           <VideosSection theme={theme} video={movieVids} />
         </div>
       )}
-
       <hr className="mx-auto mt-16 w-[90%]" />
       <div ref={watchSection}>
         <WatchSection
