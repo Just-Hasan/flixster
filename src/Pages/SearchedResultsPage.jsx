@@ -44,6 +44,7 @@ export default function SearchedResultsPage() {
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       // console.log(lastPage, allPage);
+      // the returned value from here determined the hasNextPage value
       const nextPage = lastPage?.page + 1;
       return nextPage <= lastPage.total_pages ? nextPage : undefined;
     },

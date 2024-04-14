@@ -6,23 +6,22 @@ import { FaStar } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import {
   addToFavourite,
-  getFavourite,
   getFavouriteRating,
+  getFavouriteReviews,
   getIsInsideFavourite,
   removeFromFavourite,
 } from "../../Global/FavouriteSlice";
 
-export default function AddToFavouriteSection({ favShowData }) {
+export default function AddToFavouriteSection({ favShowData, setOpenReview }) {
   const theme = useSelector(getTheme);
   const [userRating, setUserRating] = useState(0);
   const dispatch = useDispatch();
   const favData = { ...favShowData, rating: userRating };
-  const favourite = useSelector(getFavourite);
+  const review = useSelector(getFavouriteReviews(Number(favShowData?.id)));
   const isInFavourite = useSelector(getIsInsideFavourite(favShowData?.id));
 
   // Rating if it's already in favouriteArray
   const rating = useSelector(getFavouriteRating(favShowData?.id));
-  console.log(favShowData);
   return (
     <section className="my-24 ">
       <div className="mx-auto w-max">
@@ -33,7 +32,7 @@ export default function AddToFavouriteSection({ favShowData }) {
           className={`flex w-max flex-col ${theme === "dark" ? "bg-blueNight" : "bg-stone-200"} p-8`}
         >
           {isInFavourite ? (
-            <div className="mb-5 flex items-center gap-x-4">
+            <div className="mb-5 flex items-center justify-center gap-x-4">
               <p className="text-center text-4xl">
                 You rate this show {rating}
               </p>
@@ -66,19 +65,27 @@ export default function AddToFavouriteSection({ favShowData }) {
               onClick={() => {
                 dispatch(addToFavourite(favData));
               }}
-              className="mx-auto mt-4 w-max rounded-full  bg-red-500 p-4 text-center text-xl uppercase text-white ring-2 ring-white hover:bg-red-600 active:bg-red-800"
+              className={`mx-auto mt-4 w-max  rounded-full bg-red-500 p-4 text-center text-xl uppercase text-white  hover:bg-red-600 active:bg-red-800`}
             >
               Add to favourite
             </button>
           ) : (
-            <button
-              onClick={() => {
-                dispatch(removeFromFavourite(favShowData?.id));
-              }}
-              className="mx-auto mt-4 w-max rounded-full  bg-red-500 p-4 text-center text-xl uppercase text-white ring-2 ring-white hover:bg-red-600 active:bg-red-800"
-            >
-              Remove from favourite
-            </button>
+            <div className="grid grid-cols-2 gap-x-4">
+              <button
+                onClick={() => {
+                  dispatch(removeFromFavourite(favShowData?.id));
+                }}
+                className={`ring-sto mx-auto mt-4 w-full  rounded-full bg-red-500 p-4 text-center text-xl  uppercase text-white  hover:bg-red-600 active:bg-red-800`}
+              >
+                move from favourite
+              </button>
+              <button
+                onClick={() => setOpenReview(true)}
+                className={`mx-auto mt-4 w-full  rounded-full bg-red-500 p-4 text-center text-xl  uppercase text-white  hover:bg-red-600 active:bg-red-800`}
+              >
+                {review ? "Update review" : "Review this movie"}
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -88,4 +95,5 @@ export default function AddToFavouriteSection({ favShowData }) {
 
 AddToFavouriteSection.propTypes = {
   favShowData: PropTypes.object,
+  setOpenReview: PropTypes.func,
 };

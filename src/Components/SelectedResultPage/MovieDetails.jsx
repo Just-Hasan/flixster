@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 export default function MovieDetails({
   type,
   release_date,

@@ -20,7 +20,6 @@ import TopRatedSection from "../Components/Homepage/TopRatedSection";
 import { Link } from "react-router-dom";
 import UpcomingSection from "../Components/Homepage/UpcomingSection";
 import MovieItem from "../ui/MovieItem";
-import Button from "../ui/Button";
 export default function Homepage() {
   const [movieSection, setMovieAction] = useState(0);
   const homepageData = useSelector((store) => store.homepage);
@@ -108,7 +107,7 @@ export default function Homepage() {
               })}
             </div>
             <Link
-              to={`${movieType[movieSection].type}`}
+              to={"/movie?sort_by=popularity.desc&page=1"}
               className={`text-[18px] underline ${
                 theme === "dark" ? "text-white" : "text-black"
               } justify-self-end`}
@@ -137,7 +136,7 @@ export default function Homepage() {
               Airing series
             </h2>
             <Link
-              to={`${movieType[movieSection].type}`}
+              to={"/tv?sort_by=popularity.desc&page=1"}
               className={`text-[18px] underline ${
                 theme === "dark" ? "text-[#f4f4f4]" : "text-[#1c1c1c]"
               } justify-self-end `}

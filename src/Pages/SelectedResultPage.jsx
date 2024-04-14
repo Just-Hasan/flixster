@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   getMovieData,
   getMovieVideo,
@@ -7,7 +7,7 @@ import {
   getMovieProvider,
   getMovieSimilar,
 } from "../Global/SelectedMovieSlice";
-
+import { getFavouriteReviews } from "../Global/FavouriteSlice";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Overview from "../Components/SelectedResultPage/Overview";
@@ -22,16 +22,18 @@ import WatchSection from "../Components/SelectedResultPage/WatchSection";
 import TvSeasons from "../Components/SelectedResultPage/TvSeasons";
 import RecommendationsSection from "../Components/SelectedResultPage/RecommendationsSection";
 import AddToFavouriteSection from "../Components/SelectedResultPage/AddToFavouriteSection";
+import ReviewsModal from "../Components/SelectedResultPage/ReviewsModal";
 
 export default function SelectedResultPage() {
   const dispatch = useDispatch();
   const [searchParam] = useSearchParams();
+  const [reviews] = useState("");
+  const [openReview, setOpenReview] = useState(false);
   const { theme } = useSelector((store) => store.theme);
   const { movieData, movieVids, movieCredits, movieProvider, similarMovie } =
     useSelector((store) => store.selected_movie);
   const vidsSection = useRef(null);
   const watchSection = useRef(null);
-
   const id = searchParam.get("id");
   const type = searchParam.get("type");
 
@@ -117,6 +119,7 @@ export default function SelectedResultPage() {
     type,
     genres,
     posterImg: `${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}`,
+    reviews,
   };
 
   return (
@@ -125,8 +128,17 @@ export default function SelectedResultPage() {
         theme === "dark"
           ? "bg-[#1c1c1c] text-[#f4f4f4]"
           : "bg-[#f4f4f4] text-[#1c1c1c]"
-      } transition-all duration-300 ease-in-out`}
+      } relative transition-all duration-300 ease-in-out`}
     >
+      <ReviewsModal
+        title={title || name}
+        posterImg={`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}`}
+        setOpenReview={setOpenReview}
+        openReview={openReview}
+        reviews={reviews}
+        selectedShowId={Number(id)}
+      />
+
       <BackdropPoster backdrop_path={movieData?.backdrop_path} />
 
       <section className="mx-auto grid w-[80%] grid-cols-2 ">
@@ -166,7 +178,10 @@ export default function SelectedResultPage() {
         </div>
       </section>
 
-      <AddToFavouriteSection favShowData={favShowData} />
+      <AddToFavouriteSection
+        favShowData={favShowData}
+        setOpenReview={setOpenReview}
+      />
 
       <CastSection movieCredits={movieCredits} />
 

@@ -6,7 +6,7 @@ export default function Button({ children, to, type, handlerFunc, ext_link }) {
   const { theme } = useSelector((store) => store.theme);
   const primary = `focus: rounded-full w-max  bg-accent p-4  text-2xl  font-semibold text-[#101820] outline-none transition-all duration-300 ease-in-out hover:bg-yellow-200 focus:outline-none focus:ring-1 focus:ring-accent focus:ring-offset-2 active:bg-yellow-300`;
 
-  const secondary = `focus: rounded-full  w-max border-2 ${theme === "dark" ? "border-white text-white" : "border-black text-black"} bg-transparent p-4  text-md  font-semibold  outline-none transition-all duration-300 ease-in-out  focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-2`;
+  const secondary = `focus: text-2xl rounded-full  w-max border-2 ${theme === "dark" ? "border-white text-white" : "border-black text-black"} bg-transparent p-4  text-md  font-semibold  outline-none transition-all duration-300 ease-in-out  focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-2`;
 
   const link = `border-b-2 ${theme === "dark" ? "border-white text-white" : "border-black text-black"} w-max bg-transparent py-4  text-md  font-semibold  outline-none transition-all duration-300 ease-in-out hover:border-accent hover:text-accent focus:outline-none`;
 

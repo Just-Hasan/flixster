@@ -18,3 +18,16 @@ export const fetchSearchData = async function (props) {
     console.log(error.message);
   }
 };
+
+export const fetchUpcoming = async function () {
+  const { data } = await axios.get(
+    "https://api.themoviedb.org/3/movie/upcoming",
+    {
+      params: {
+        api_key: import.meta.env.VITE_TMDB_API_KEY,
+        page: 1,
+      },
+    },
+  );
+  return data;
+};
