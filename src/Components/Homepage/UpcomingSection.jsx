@@ -10,7 +10,7 @@ export default function UpcomingSection() {
   const upcomingMovie = data?.results;
   return (
     <div className="grid grid-cols-4 gap-8">
-      {upcomingMovie?.map((movie) => {
+      {upcomingMovie?.slice(0, 8)?.map((movie) => {
         return (
           <MovieItem type="movie" movie={movie} key={movie?.id}></MovieItem>
         );
