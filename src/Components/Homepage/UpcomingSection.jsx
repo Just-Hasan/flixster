@@ -7,12 +7,12 @@ export default function UpcomingSection() {
     queryFn: () => fetchUpcoming(),
   });
 
-  const upcomingMovie = data.results;
+  const upcomingMovie = data?.results;
   return (
     <div className="grid grid-cols-4 gap-8">
       {upcomingMovie.map((movie) => {
         return (
-          <MovieItem type="movie" movie={movie} key={movie.id}></MovieItem>
+          <MovieItem type="movie" movie={movie} key={movie?.id}></MovieItem>
         );
       })}
     </div>
