@@ -60,6 +60,7 @@ export default function HomepageMovieItemSkeleton() {
                     width: "100%",
                     height: "24px",
                     marginTop: "2rem",
+                    borderRadius: "30px",
                   }}
                 />
               );

@@ -21,8 +21,6 @@ export default function Homepage() {
   const [movieSection, setMovieAction] = useState(0);
   const { theme } = useSelector((store) => store.theme);
 
-  // I myself don't understand why I do this, it's a global remote state, why do I treat it like a Global UI state
-
   const { isPending: isLoadingAiringMovies, results: airingMovies } =
     useFetchShow(fetchAiringMovies, "airing_movies");
 
@@ -30,8 +28,6 @@ export default function Homepage() {
     fetchPopularTv,
     "popular_tv",
   );
-
-  console.log(isLoadingAiringMovies);
 
   const movieType = [
     { type: "Popular", section: <PopularSection key={0} /> },
