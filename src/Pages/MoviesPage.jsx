@@ -1,23 +1,23 @@
-import { getMoviesData } from "../Global/MoviesPageSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import MovieItem from "../ui/MovieItem";
 import SortBy from "../ui/SortBy";
 import Pagination from "../ui/Pagination";
 import { getTheme } from "../Global/ThemeSlice";
+import { fetchDiscoverMovies } from "../api/tmdb";
+import MovieItemSkeleton from "../ui/skeleton/MovieItemSkeleton";
 export default function MoviesPage() {
-  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const sort = searchParams.get("sort_by");
   const pageNum = searchParams.get("page");
 
-  const { data: movies } = useQuery({
+  const { data: movies, isPending } = useQuery({
     queryKey: ["movie", { sort, pageNum }],
-    queryFn: () => dispatch(getMoviesData(sort, pageNum)),
+    queryFn: () => fetchDiscoverMovies(sort, pageNum),
     keepPreviousData: true,
   });
-
+  console.log(isPending);
   const theme = useSelector(getTheme);
   return (
     <div
@@ -29,7 +29,9 @@ export default function MoviesPage() {
         <h2 className="text-[24px]">Movies</h2>
         <SortBy />
       </div>
+
       <ul className="grid grid-cols-5 gap-4">
+        {isPending && <MovieItemSkeleton count={20} />}
         {movies?.results?.map((movie) => {
           return (
             <MovieItem movie={movie} type="movie" key={movie.id}></MovieItem>

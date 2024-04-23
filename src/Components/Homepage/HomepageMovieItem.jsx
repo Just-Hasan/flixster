@@ -1,36 +1,7 @@
 import PropTypes from "prop-types";
 import style from "../../Styles/HomepageMovieItem.module.css";
-import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
-const genreData = [
-  { id: 28, genre: "Action" },
-  { id: 12, genre: "Adventure" },
-  { id: 16, genre: "Animation" },
-  { id: 35, genre: "Comedy" },
-  { id: 80, genre: "Crime" },
-  { id: 99, genre: "Documentary" },
-  { id: 18, genre: "Drama" },
-  { id: 10751, genre: "Family" },
-  { id: 14, genre: "Fantasy" },
-  { id: 36, genre: "History" },
-  { id: 27, genre: "Horror" },
-  { id: 10402, genre: "Music" },
-  { id: 9648, genre: "Mystery" },
-  { id: 10749, genre: "Romance" },
-  { id: 878, genre: "Science Fiction" },
-  { id: 10770, genre: "TV Movie" },
-  { id: 53, genre: "Thriller" },
-  { id: 10752, genre: "War" },
-  { id: 37, genre: "Western" },
-];
-
-function getGenre(genres) {
-  const genre = genreData.filter((genreObj) =>
-    genres.includes(genreObj.id) ? genreObj.genre : "",
-  );
-
-  return genre;
-}
+import { getGenre } from "../../utils/helper";
 
 export default function HomepageMovieItem({ movie }) {
   const genre = getGenre(movie.genre_ids);
@@ -63,12 +34,7 @@ export default function HomepageMovieItem({ movie }) {
             );
           })}
         </p>
-        {/* <Link
-          to={`/movie/selected?title=${title}&type=movie&id=${id}`}
-          className="rounded-full bg-[#fee715] p-4 text-[24px] font-semibold text-[#101820]"
-        >
-          Details
-        </Link> */}
+
         <Button
           to={`/movie/selected?title=${title}&type=movie&id=${id}`}
           type="primary"

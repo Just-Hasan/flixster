@@ -1,27 +1,27 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
+import { fetchDiscoverTv } from "../api/tmdb";
 import { getTheme } from "../Global/ThemeSlice";
 import MovieItem from "../ui/MovieItem";
 import SortBy from "../ui/SortBy";
 import Pagination from "../ui/Pagination";
-import { fetchTvShow } from "../Global/TvPageSlice";
+import MovieItemSkeleton from "../ui/skeleton/MovieItemSkeleton";
 export default function TvPage() {
-  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const sort = searchParams.get("sort_by");
   const pageNum = searchParams.get("page");
 
-  const tvQuery = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["tv", { sort, pageNum }],
-    queryFn: () => dispatch(fetchTvShow({ page: pageNum, sort })),
+    queryFn: () => fetchDiscoverTv(pageNum, sort),
     keepPreviousData: true,
   });
   //   const tvDetails = useSelector(getTvShow);
   const theme = useSelector(getTheme);
-  const tvs = tvQuery?.data?.payload?.results ?? [];
-  const total_pages = tvQuery?.data?.payload?.total_pages ?? 0;
-  const total_results = tvQuery?.data?.payload?.total_results ?? 0;
+  const tvs = data?.results ?? [];
+  const total_pages = data?.total_pages ?? 0;
+  const total_results = data?.total_results ?? 0;
 
   return (
     <div
@@ -34,6 +34,7 @@ export default function TvPage() {
         <SortBy />
       </div>
       <ul className="grid grid-cols-5 gap-4">
+        {isPending && <MovieItemSkeleton type="multiple" count={20} />}
         {tvs?.map((tv) => {
           return <MovieItem movie={tv} type="tv" key={tv.id}></MovieItem>;
         })}

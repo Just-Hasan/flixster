@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-export default function MovieItem({ movie, type, index, array }) {
+export default function MovieItem({ movie, type }) {
   const mediaType = movie?.media_type;
-
   const hasPoster =
     movie?.poster_path &&
     `https://image.tmdb.org/t/p/original/${movie?.poster_path}`;
@@ -14,7 +13,7 @@ export default function MovieItem({ movie, type, index, array }) {
         movie?.original_title || movie?.name
       }&type=${mediaType || type}&id=${movie?.id}`}
       key={movie?.id}
-      className="overflow-hidden "
+      className="overflow-hidden"
     >
       <div
         className={`relative h-full w-full`}

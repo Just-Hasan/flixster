@@ -1,7 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import homepageReducer from "./Global/HomepageSlice";
-import moviePageReducer from "./Global/MoviesPageSlice";
-import tvPageReducer from "./Global/TvPageSlice";
+
 import navbarReducer from "./Global/NavbarSlice";
 import themeReducer from "./Global/ThemeSlice";
 import selectedMovieReducer from "./Global/SelectedMovieSlice";
@@ -34,11 +32,9 @@ const favMoviesPersistConfig = {
 };
 
 const reducer = combineReducers({
-  homepage: homepageReducer,
   navbar: navbarReducer,
   selected_movie: selectedMovieReducer,
-  tv_show: tvPageReducer,
-  movie: moviePageReducer,
+
   favourite: persistReducer(favMoviesPersistConfig, favouriteReducer),
   theme: persistReducer(themePersistConfig, themeReducer),
 });

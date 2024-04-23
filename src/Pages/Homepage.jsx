@@ -1,12 +1,5 @@
-import {
-  airingMovies,
-  popularMovies,
-  topRatedMovies,
-  airingTv,
-} from "../Global/HomepageSlice";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
@@ -20,29 +13,25 @@ import TopRatedSection from "../Components/Homepage/TopRatedSection";
 import { Link } from "react-router-dom";
 import UpcomingSection from "../Components/Homepage/UpcomingSection";
 import MovieItem from "../ui/MovieItem";
+import { useFetchShow } from "../Components/Homepage/useFetchShow";
+import { fetchAiringMovies, fetchPopularTv } from "../api/tmdb";
+import MovieItemSkeleton from "../ui/skeleton/MovieItemSkeleton";
+import HomepageMovieItemSkeleton from "../ui/skeleton/HomepageMovieItemSkeleton";
 export default function Homepage() {
   const [movieSection, setMovieAction] = useState(0);
-  const homepageData = useSelector((store) => store.homepage);
   const { theme } = useSelector((store) => store.theme);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(airingMovies());
-  }, [dispatch]);
+  // I myself don't understand why I do this, it's a global remote state, why do I treat it like a Global UI state
 
-  useEffect(() => {
-    dispatch(popularMovies());
-  }, [dispatch]);
+  const { isPending: isLoadingAiringMovies, results: airingMovies } =
+    useFetchShow(fetchAiringMovies, "airing_movies");
 
-  useEffect(() => {
-    dispatch(topRatedMovies());
-  }, [dispatch]);
+  const { isPending: isLoadingPopularTv, results: popularTv } = useFetchShow(
+    fetchPopularTv,
+    "popular_tv",
+  );
 
-  useEffect(() => {
-    dispatch(airingTv());
-  }, [dispatch]);
-
-  const { airing, airingTvSeries } = homepageData;
+  console.log(isLoadingAiringMovies);
 
   const movieType = [
     { type: "Popular", section: <PopularSection key={0} /> },
@@ -51,6 +40,8 @@ export default function Homepage() {
   ];
   return (
     <>
+      {isLoadingAiringMovies && <HomepageMovieItemSkeleton />}
+
       <section>
         <Swiper
           slidesPerView={1}
@@ -67,7 +58,7 @@ export default function Homepage() {
             easing: "easeInQuad",
           }}
         >
-          {airing.slice(0, 5).map((movie) => {
+          {airingMovies?.slice(0, 5).map((movie) => {
             return (
               <SwiperSlide key={movie.id}>
                 <HomepageMovieItem movie={movie}></HomepageMovieItem>
@@ -76,6 +67,8 @@ export default function Homepage() {
           })}
         </Swiper>
       </section>
+      {/*  */}
+
       <section
         className={`${
           theme === "light" ? "bg-white" : "bg-[#1c1c1c]"
@@ -145,7 +138,8 @@ export default function Homepage() {
             </Link>
           </div>
           <ul className="grid grid-cols-4 gap-8">
-            {airingTvSeries.slice(0, 8).map((tv) => {
+            {isLoadingPopularTv && <MovieItemSkeleton count={8} />}
+            {popularTv?.slice(0, 8).map((tv) => {
               return <MovieItem key={tv.id} movie={tv} type="tv" />;
             })}
           </ul>
