@@ -5,12 +5,17 @@ import { useSelector } from "react-redux";
 import { getTheme } from "../Global/ThemeSlice";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
+import { useQueryClient } from "@tanstack/react-query";
+import { fetchDiscoverMovies } from "../api/tmdb";
 export default function Pagination({ resultsLength, totalPages }) {
   const theme = useSelector(getTheme);
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page");
   const [initValue, setInitValue] = useState(Number(page));
   const currentPage = Number(searchParams.get("page"));
+  const sortBy = searchParams.get("sort_by");
+  console.log(sortBy);
+  const queryClient = useQueryClient();
   const testArr = new Array(resultsLength)
     .fill(initValue)
     .map((num, i) => num + i);
@@ -44,6 +49,13 @@ export default function Pagination({ resultsLength, totalPages }) {
     setSearchParams(newPage.toString());
   }
 
+  function onHoverPrefetch(hoverNum) {
+    queryClient.prefetchQuery({
+      queryKey: ["movie", { sortBy, hoverNum }],
+      queryFn: () => fetchDiscoverMovies(sortBy, hoverNum),
+    });
+  }
+
   useEffect(() => {
     if (currentPage < 0) {
       newPage.set("page", 1);
@@ -68,6 +80,7 @@ export default function Pagination({ resultsLength, totalPages }) {
         {testArr.slice(0, 5).map((num) => {
           return (
             <button
+              onMouseEnter={() => onHoverPrefetch(num)}
               key={num}
               onClick={() => handleChangePage(num)}
               defaultValue={() => searchParams.get("page")}

@@ -11,6 +11,7 @@ import {
   getIsInsideFavourite,
   removeFromFavourite,
 } from "../../Global/FavouriteSlice";
+import Modal from "./Modal";
 
 export default function AddToFavouriteSection({ favShowData, setOpenReview }) {
   const theme = useSelector(getTheme);
@@ -79,12 +80,18 @@ export default function AddToFavouriteSection({ favShowData, setOpenReview }) {
               >
                 move from favourite
               </button>
-              <button
-                onClick={() => setOpenReview(true)}
-                className={`mx-auto mt-4 w-full  rounded-full bg-red-500 p-4 text-center text-xl  uppercase text-white  hover:bg-red-600 active:bg-red-800`}
-              >
-                {review ? "Update review" : "Review this movie"}
-              </button>
+              {/* Modal needs to happen here */}
+              <>
+                <button
+                  onClick={() => setOpenReview(true)}
+                  className={`mx-auto mt-4 w-full  rounded-full bg-red-500 p-4 text-center text-xl  uppercase text-white  hover:bg-red-600 active:bg-red-800`}
+                >
+                  {review ? "Update review" : "Review this movie"}
+                </button>
+                <Modal>
+                  <Modal.Open>Compound component bitch</Modal.Open>
+                </Modal>
+              </>
             </div>
           )}
         </div>

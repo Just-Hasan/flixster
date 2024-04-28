@@ -14,8 +14,8 @@ export default function MoviesPage() {
 
   const { data: movies, isPending } = useQuery({
     queryKey: ["movie", { sort, pageNum }],
-    queryFn: () => fetchDiscoverMovies(sort, pageNum),
     keepPreviousData: true,
+    queryFn: () => fetchDiscoverMovies(sort, pageNum),
   });
   console.log(isPending);
   const theme = useSelector(getTheme);
