@@ -7,18 +7,16 @@ import PropTypes from "prop-types";
 import {
   addToFavourite,
   getFavouriteRating,
-  getFavouriteReviews,
   getIsInsideFavourite,
   removeFromFavourite,
 } from "../../Global/FavouriteSlice";
 import Modal from "./Modal";
 
-export default function AddToFavouriteSection({ favShowData, setOpenReview }) {
+export default function AddToFavouriteSection({ favShowData }) {
   const theme = useSelector(getTheme);
   const [userRating, setUserRating] = useState(0);
   const dispatch = useDispatch();
   const favData = { ...favShowData, rating: userRating };
-  const review = useSelector(getFavouriteReviews(Number(favShowData?.id)));
   const isInFavourite = useSelector(getIsInsideFavourite(favShowData?.id));
 
   // Rating if it's already in favouriteArray
@@ -82,14 +80,11 @@ export default function AddToFavouriteSection({ favShowData, setOpenReview }) {
               </button>
               {/* Modal needs to happen here */}
               <>
-                <button
-                  onClick={() => setOpenReview(true)}
-                  className={`mx-auto mt-4 w-full  rounded-full bg-red-500 p-4 text-center text-xl  uppercase text-white  hover:bg-red-600 active:bg-red-800`}
-                >
-                  {review ? "Update review" : "Review this movie"}
-                </button>
-                <Modal>
-                  <Modal.Open>Compound component bitch</Modal.Open>
+                <Modal modalDetails={favShowData}>
+                  <Modal.Open></Modal.Open>
+                  <Modal.ReviewModal
+                    modalDetails={favShowData}
+                  ></Modal.ReviewModal>
                 </Modal>
               </>
             </div>
