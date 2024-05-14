@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import MovieItemSkeleton from "./skeleton/MovieItemSkeleton";
+import { useState } from "react";
 
 export default function MovieItem({ movie, type }) {
+  const [effect, setEffect] = useState("blur");
   const mediaType = movie?.media_type;
   const hasPoster =
     movie?.poster_path &&
@@ -19,10 +23,18 @@ export default function MovieItem({ movie, type }) {
         className={`relative h-full w-full`}
         // ref={index === array?.length - 1 ? inRef : null}
       >
-        <img
+        {/* <img
           src={hasPoster}
           alt="image not found"
+          loading="lazy"
           className="aspect-[2/3] object-contain"
+        /> */}
+        <LazyLoadImage
+          alt="Image not found"
+          src={hasPoster}
+          placeholder={<MovieItemSkeleton type="single"></MovieItemSkeleton>}
+          height={"100%"}
+          width={"100%"}
         />
       </div>
     </Link>

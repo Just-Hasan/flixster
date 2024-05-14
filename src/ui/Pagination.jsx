@@ -14,7 +14,6 @@ export default function Pagination({ resultsLength, totalPages }) {
   const [initValue, setInitValue] = useState(Number(page));
   const currentPage = Number(searchParams.get("page"));
   const sortBy = searchParams.get("sort_by");
-  console.log(sortBy);
   const queryClient = useQueryClient();
   const testArr = new Array(resultsLength)
     .fill(initValue)
@@ -49,10 +48,10 @@ export default function Pagination({ resultsLength, totalPages }) {
     setSearchParams(newPage.toString());
   }
 
-  function onHoverPrefetch(hoverNum) {
+  function onHoverPrefetch(pageNum) {
     queryClient.prefetchQuery({
-      queryKey: ["movie", { sortBy, hoverNum }],
-      queryFn: () => fetchDiscoverMovies(sortBy, hoverNum),
+      queryKey: ["movie", { sortBy, pageNum }],
+      queryFn: () => fetchDiscoverMovies(sortBy, pageNum),
     });
   }
 

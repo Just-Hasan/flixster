@@ -13,7 +13,7 @@ export default function MovieItemSkeleton({ count, type = "multiple" }) {
           highlightColor={theme === "dark" ? "#adb5bd" : "#444"}
           width={"100%"}
           height={"100%"}
-          duration={3.5}
+          duration={4}
         />
       </li>
     );

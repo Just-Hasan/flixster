@@ -7,18 +7,25 @@ import Pagination from "../ui/Pagination";
 import { getTheme } from "../Global/ThemeSlice";
 import { fetchDiscoverMovies } from "../api/tmdb";
 import MovieItemSkeleton from "../ui/skeleton/MovieItemSkeleton";
+import Loader2 from "../ui/Loader2";
 export default function MoviesPage() {
   const [searchParams] = useSearchParams();
-  const sort = searchParams.get("sort_by");
-  const pageNum = searchParams.get("page");
+  const sortBy = searchParams.get("sort_by");
+  const pageNum = Number(searchParams.get("page"));
 
-  const { data: movies, isPending } = useQuery({
-    queryKey: ["movie", { sort, pageNum }],
-    keepPreviousData: true,
-    queryFn: () => fetchDiscoverMovies(sort, pageNum),
+  const {
+    data: movies,
+    isPending,
+    isFetching,
+    isRefetching,
+    isLoading,
+  } = useQuery({
+    queryKey: ["movie", { sortBy, pageNum }],
+    queryFn: () => fetchDiscoverMovies(sortBy, pageNum),
   });
-  console.log(isPending);
+  console.log(isFetching);
   const theme = useSelector(getTheme);
+
   return (
     <div
       className={`pb-24 pt-48 ${
