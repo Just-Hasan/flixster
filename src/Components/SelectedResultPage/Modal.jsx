@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "../../ui/Button";
 import {
@@ -13,6 +6,7 @@ import {
   getFavouriteReviews,
 } from "../../Global/FavouriteSlice";
 import { useDispatch, useSelector } from "react-redux";
+import useCloseModal from "../../hooks/useCloseModal";
 
 const ModalContext = createContext();
 export default function Modal({ children, modalDetails }) {
@@ -54,23 +48,9 @@ function Open() {
 function ReviewModal({ modalDetails = {} }) {
   const { id, title } = modalDetails;
   const { closeModal, open, review, posterImg } = useContext(ModalContext);
-  const modalRef = useRef(null);
+  const modalRef = useCloseModal(closeModal);
   const reviewsRef = useRef(null);
   const dispatch = useDispatch();
-
-  const closeOnClick = useCallback(
-    function (e) {
-      if (modalRef.current && !modalRef.current.contains(e.target.value)) {
-        closeModal();
-      }
-    },
-    [closeModal],
-  );
-
-  useEffect(() => {
-    document.addEventListener("click", closeOnClick, true);
-    return document.removeEventListener("click", closeOnClick);
-  }, [closeOnClick]);
 
   return (
     <div
