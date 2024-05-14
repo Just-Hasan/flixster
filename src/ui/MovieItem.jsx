@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import MovieItemSkeleton from "./skeleton/MovieItemSkeleton";
-import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function MovieItem({ movie, type }) {
-  const [effect, setEffect] = useState("blur");
+  const queryClient = useQueryClient();
   const mediaType = movie?.media_type;
   const hasPoster =
     movie?.poster_path &&
@@ -19,16 +19,7 @@ export default function MovieItem({ movie, type }) {
       key={movie?.id}
       className="overflow-hidden"
     >
-      <div
-        className={`relative h-full w-full`}
-        // ref={index === array?.length - 1 ? inRef : null}
-      >
-        {/* <img
-          src={hasPoster}
-          alt="image not found"
-          loading="lazy"
-          className="aspect-[2/3] object-contain"
-        /> */}
+      <div className={`relative h-full w-full`}>
         <LazyLoadImage
           alt="Image not found"
           src={hasPoster}

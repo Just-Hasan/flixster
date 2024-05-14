@@ -7,7 +7,7 @@ import Pagination from "../ui/Pagination";
 import { getTheme } from "../Global/ThemeSlice";
 import { fetchDiscoverMovies } from "../api/tmdb";
 import MovieItemSkeleton from "../ui/skeleton/MovieItemSkeleton";
-import Loader2 from "../ui/Loader2";
+
 export default function MoviesPage() {
   const [searchParams] = useSearchParams();
   const sortBy = searchParams.get("sort_by");
@@ -17,8 +17,6 @@ export default function MoviesPage() {
     data: movies,
     isPending,
     isFetching,
-    isRefetching,
-    isLoading,
   } = useQuery({
     queryKey: ["movie", { sortBy, pageNum }],
     queryFn: () => fetchDiscoverMovies(sortBy, pageNum),

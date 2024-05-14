@@ -1,12 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
-import {
-  getMovieData,
-  getMovieVideo,
-  getMovieCredits,
-  getMovieProvider,
-  getMovieSimilar,
-} from "../Global/SelectedMovieSlice";
 
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -22,18 +15,42 @@ import WatchSection from "../Components/SelectedResultPage/WatchSection";
 import TvSeasons from "../Components/SelectedResultPage/TvSeasons";
 import RecommendationsSection from "../Components/SelectedResultPage/RecommendationsSection";
 import AddToFavouriteSection from "../Components/SelectedResultPage/AddToFavouriteSection";
+import { useGetShowData } from "../Components/SelectedResultPage/useGetShowData";
+import Loader2 from "../ui/Loader2";
+import {
+  fetchCredits,
+  fetchData,
+  fetchRecommendations,
+  fetchVideo,
+  fetchWatchProvider,
+} from "../api/selected_movie_tv";
 
 export default function SelectedResultPage() {
-  const dispatch = useDispatch();
   const [searchParam] = useSearchParams();
   const [reviews] = useState("");
   const { theme } = useSelector((store) => store.theme);
-  const { movieData, movieVids, movieCredits, movieProvider, similarMovie } =
-    useSelector((store) => store.selected_movie);
+
   const vidsSection = useRef(null);
   const watchSection = useRef(null);
   const id = searchParam.get("id");
   const type = searchParam.get("type");
+
+  const { data: movieData = {}, isLoading: isFetchingMovieData } =
+    useGetShowData(fetchData, "fetchData");
+
+  const { data: movieVids = {}, isLoading: isFetchingMovieVids } =
+    useGetShowData(fetchVideo, "fetchVideo");
+
+  const { data: movieCredits = {}, isLoading: isFetchingMovieCredits } =
+    useGetShowData(fetchCredits, "fetchCredits");
+
+  const { data: movieProvider = {}, isLoading: isFetchingMovieProvider } =
+    useGetShowData(fetchWatchProvider, "fetchProvider");
+
+  const {
+    data: movieRecommendations = {},
+    isLoading: isFetchingMovieRecommendations,
+  } = useGetShowData(fetchRecommendations, "fetchSimilar");
 
   const {
     title,
@@ -64,29 +81,9 @@ export default function SelectedResultPage() {
   }
 
   useEffect(() => {
-    dispatch(getMovieData(id, type));
-  }, [dispatch, id, type]);
-
-  useEffect(() => {
-    dispatch(getMovieVideo(id, type));
-  }, [id, type, dispatch]);
-
-  useEffect(() => {
-    dispatch(getMovieCredits(id, type));
-  }, [id, type, dispatch]);
-
-  useEffect(() => {
     document.title = `${name || title}`;
     return () => (document.title = "Flixster");
   }, [name, title]);
-
-  useEffect(() => {
-    dispatch(getMovieProvider(id, type));
-  }, [dispatch, id, type]);
-
-  useEffect(() => {
-    dispatch(getMovieSimilar(id, type));
-  }, [dispatch, id, type]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -109,7 +106,7 @@ export default function SelectedResultPage() {
 
   const tvHasSeasons = type === "tv" && seasons?.length > 0;
 
-  const movieTvHasRecommendations = similarMovie.length > 0;
+  const movieTvHasRecommendations = movieRecommendations.length > 0;
   // console.log(`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}`);
   const favShowData = {
     id: Number(id),
@@ -119,6 +116,15 @@ export default function SelectedResultPage() {
     posterImg: `${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}`,
     reviews,
   };
+
+  if (
+    isFetchingMovieCredits ||
+    isFetchingMovieData ||
+    isFetchingMovieProvider ||
+    isFetchingMovieRecommendations ||
+    isFetchingMovieVids
+  )
+    return <Loader2></Loader2>;
 
   return (
     <div
@@ -195,7 +201,7 @@ export default function SelectedResultPage() {
       {movieTvHasRecommendations && (
         <>
           <hr className="mx-auto mt-16 w-[90%]" />
-          <RecommendationsSection movie={similarMovie} type={type} />
+          <RecommendationsSection movie={movieRecommendations} type={type} />
         </>
       )}
     </div>

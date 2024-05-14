@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import navbarReducer from "./Global/NavbarSlice";
 import themeReducer from "./Global/ThemeSlice";
-import selectedMovieReducer from "./Global/SelectedMovieSlice";
 import favouriteReducer from "./Global/FavouriteSlice";
 
 /////////////////////////////////////[Redux Persist]
@@ -33,8 +32,6 @@ const favMoviesPersistConfig = {
 
 const reducer = combineReducers({
   navbar: navbarReducer,
-  selected_movie: selectedMovieReducer,
-
   favourite: persistReducer(favMoviesPersistConfig, favouriteReducer),
   theme: persistReducer(themePersistConfig, themeReducer),
 });
