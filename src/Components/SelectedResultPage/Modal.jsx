@@ -15,7 +15,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const ModalContext = createContext();
-
 export default function Modal({ children, modalDetails }) {
   const { id, posterImg: posterPath, title } = modalDetails;
   const [open, setOpen] = useState(false);
