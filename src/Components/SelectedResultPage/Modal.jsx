@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import useCloseModal from "../../hooks/useCloseModal";
 
 const ModalContext = createContext();
-
 export default function Modal({ children, modalDetails }) {
   const { id, posterImg: posterPath, title } = modalDetails;
   const [open, setOpen] = useState(false);
