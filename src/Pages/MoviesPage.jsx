@@ -21,7 +21,7 @@ export default function MoviesPage() {
     queryKey: ["movie", { sortBy, pageNum }],
     queryFn: () => fetchDiscoverMovies(sortBy, pageNum),
   });
-  console.log(isFetching);
+
   const theme = useSelector(getTheme);
 
   return (
@@ -37,11 +37,9 @@ export default function MoviesPage() {
 
       <ul className="grid grid-cols-5 gap-4">
         {isPending && <MovieItemSkeleton count={20} />}
-        {movies?.results?.map((movie) => {
-          return (
-            <MovieItem movie={movie} type="movie" key={movie.id}></MovieItem>
-          );
-        })}
+        {movies?.results?.map((movie) => (
+          <MovieItem movie={movie} type="movie" key={movie.id} />
+        ))}
       </ul>
 
       <Pagination

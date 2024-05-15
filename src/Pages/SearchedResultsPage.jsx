@@ -10,7 +10,7 @@ import { useInView } from "react-intersection-observer";
 import Loader2 from "../ui/Loader2";
 import { FaArrowUp } from "react-icons/fa";
 export default function SearchedResultsPage() {
-  const [ref, inView] = useInView({ rootMargin: "0px 0px 0px 0px" });
+  const [, inView] = useInView({ rootMargin: "0px 0px 0px 0px" });
   const { theme } = useSelector((store) => store.theme);
   const [searchParam] = useSearchParams();
   const query = searchParam.get("query");
@@ -60,7 +60,15 @@ export default function SearchedResultsPage() {
     ?.map((item) => item.results?.map((res) => res))
     .flat()
     .map((movie, index, arr) => {
-      return (
+      index < arr.length - 1 ? (
+        <MovieItem
+          movie={movie}
+          index={index}
+          array={arr}
+          type={movie.media_type}
+          key={RandomID()}
+        />
+      ) : (
         <MovieItem
           movie={movie}
           index={index}
@@ -69,6 +77,15 @@ export default function SearchedResultsPage() {
           key={RandomID()}
         />
       );
+      // return (
+      //   <MovieItem
+      //     movie={movie}
+      //     index={index}
+      //     array={arr}
+      //     type={movie.media_type}
+      //     key={RandomID()}
+      //   />
+      // );
     });
 
   const hasMultiplePage = data?.pages?.length > 1;
@@ -95,9 +112,9 @@ export default function SearchedResultsPage() {
 
       <ul className="grid grid-cols-5 gap-8">
         {searchedMovieData}
-        <p style={{ opacity: "0%" }} ref={ref}>
+        {/* <p style={{ opacity: "0%" }} ref={ref}>
           end data
-        </p>
+        </p> */}
       </ul>
 
       {isFetchingNextPage && (

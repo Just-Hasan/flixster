@@ -23,7 +23,7 @@ export default function MovieItem({ movie, type }) {
         <LazyLoadImage
           alt="Image not found"
           src={hasPoster}
-          placeholder={<MovieItemSkeleton type="single"></MovieItemSkeleton>}
+          placeholderSrc={<MovieItemSkeleton type="single"></MovieItemSkeleton>}
           height={"100%"}
           width={"100%"}
         />
