@@ -10,7 +10,7 @@ import { useInView } from "react-intersection-observer";
 import Loader2 from "../ui/Loader2";
 import { FaArrowUp } from "react-icons/fa";
 export default function SearchedResultsPage() {
-  const [, inView] = useInView({ rootMargin: "0px 0px 0px 0px" });
+  const [ref, inView] = useInView({ rootMargin: "0px 0px 0px 0px" });
   const { theme } = useSelector((store) => store.theme);
   const [searchParam] = useSearchParams();
   const query = searchParam.get("query");
@@ -26,8 +26,6 @@ export default function SearchedResultsPage() {
       navigate("/home");
     }
   }, [query, navigate]);
-
-  console.log(inView);
 
   /////////////////////////////////////[useInfiniteQuery]
   const {
@@ -60,21 +58,14 @@ export default function SearchedResultsPage() {
     ?.map((item) => item.results?.map((res) => res))
     .flat()
     .map((movie, index, arr) => {
-      index < arr.length - 1 ? (
+      return (
         <MovieItem
           movie={movie}
           index={index}
           array={arr}
           type={movie.media_type}
-          key={RandomID()}
-        />
-      ) : (
-        <MovieItem
-          movie={movie}
-          index={index}
-          array={arr}
-          type={movie.media_type}
-          key={RandomID()}
+          key={index}
+          movieRef={index === arr.length - 1 ? ref : null}
         />
       );
       // return (
@@ -99,7 +90,7 @@ export default function SearchedResultsPage() {
   if (status === "error") return <h1>{error.message}</h1>;
 
   if (fetchStatus && !isFetchingNextPage === "fetching") return <Loader2 />;
-
+  console.log(isFetchingNextPage);
   return (
     <div
       className={`pb-24 pt-48 ${

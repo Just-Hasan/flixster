@@ -4,12 +4,36 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import MovieItemSkeleton from "./skeleton/MovieItemSkeleton";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function MovieItem({ movie, type }) {
+export default function MovieItem({ movie, type, movieRef }) {
   const queryClient = useQueryClient();
   const mediaType = movie?.media_type;
   const hasPoster =
     movie?.poster_path &&
     `https://image.tmdb.org/t/p/original/${movie?.poster_path}`;
+
+  if (movieRef) {
+    return (
+      <Link
+        to={`/${mediaType || type}/selected?title=${
+          movie?.original_title || movie?.name
+        }&type=${mediaType || type}&id=${movie?.id}`}
+        key={movie?.id}
+        className="overflow-hidden"
+      >
+        <div className={`relative h-full w-full`} ref={movieRef}>
+          <LazyLoadImage
+            alt="Image not found"
+            src={hasPoster}
+            placeholderSrc={
+              <MovieItemSkeleton type="single"></MovieItemSkeleton>
+            }
+            height={"100%"}
+            width={"100%"}
+          />
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <Link
@@ -36,5 +60,6 @@ MovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
   index: PropTypes.number,
+  movieRef: PropTypes.func,
   array: PropTypes.array,
 };
