@@ -12,7 +12,13 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 let persistor = persistStore(store);
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 5 * 60 * 1000,
+    },
+  },
+});
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>

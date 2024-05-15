@@ -1,9 +1,18 @@
 import PropTypes from "prop-types";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import MovieItemSkeleton from "../../ui/skeleton/MovieItemSkeleton";
 
 export default function PosterAndTagline({ poster_path, theme, tagline }) {
+  const poster = `${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}}`;
   return (
     <div className="w-1/2 translate-y-[-20%]  justify-self-center">
-      <img src={`${import.meta.env.VITE_TMDB_IMG_PATH}${poster_path}}`} />
+      <LazyLoadImage
+        src={poster}
+        height="100%"
+        width="100%"
+        placeholder={<MovieItemSkeleton type="single" />}
+        alt="movie poster"
+      />
       {tagline !== "" && (
         <blockquote
           className={`pt-[24px] text-center text-[24px] ${
