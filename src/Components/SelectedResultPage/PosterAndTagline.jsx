@@ -13,6 +13,7 @@ export default function PosterAndTagline({ poster_path, theme, tagline }) {
         placeholder={<MovieItemSkeleton type="single" />}
         alt="movie poster"
       />
+      {/* <MovieItemSkeleton type="single"></MovieItemSkeleton> */}
       {tagline !== "" && (
         <blockquote
           className={`pt-[24px] text-center text-[24px] ${

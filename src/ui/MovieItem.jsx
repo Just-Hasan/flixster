@@ -16,12 +16,10 @@ export default function MovieItem({ movie, type, movieRef }) {
   const location = useLocation();
   const queryClient = useQueryClient();
   const mediaType = movie?.media_type || location.pathname.replace("/", "");
+  console.log(type);
   const hasPoster =
     movie?.poster_path &&
     `https://image.tmdb.org/t/p/original/${movie?.poster_path}`;
-
-  const imageUrl = `https://image.tmdb.org/t/p/original/${movie?.poster_path}`;
-  console.log(mediaType);
 
   function handlePrefetchSelectedMovie() {
     for (let i = 0; i < fetchStr.length; i++) {
@@ -47,9 +45,9 @@ export default function MovieItem({ movie, type, movieRef }) {
   if (movieRef) {
     return (
       <Link
-        to={`/${mediaType || type}/selected?title=${
+        to={`/${type}/selected?title=${
           movie?.original_title || movie?.name
-        }&type=${mediaType || type}&id=${movie?.id}`}
+        }&type=${type}&id=${movie?.id}`}
         key={movie?.id}
         className="overflow-hidden"
       >
@@ -68,9 +66,9 @@ export default function MovieItem({ movie, type, movieRef }) {
 
   return (
     <Link
-      to={`/${mediaType || type}/selected?title=${
+      to={`/${type}/selected?title=${
         movie?.original_title || movie?.name
-      }&type=${mediaType || type}&id=${movie?.id}`}
+      }&type=${type}&id=${movie?.id}`}
       key={movie?.id}
       className="overflow-hidden"
     >
